@@ -1,0 +1,81 @@
+<div class="page-lightbox form-horizontal">
+	<!-- tile widget -->
+	<div class="tile-widget">
+	    <form name="destForm" ng-submit="destForm()" role="form" novalidate>
+	    	<input type="hidden" name="destID" id="destID" class="form-control" ng-model="dest.destID">
+			<div class="row">
+				<div class="col-sm-10">
+				  <h2 class="page_title">Add New Destination</h2>
+				</div>
+			</div>
+		    <div class="row">
+	          	<div class="form-group" ng-class="{ 'has-error' : destForm.store_name.$invalid && !destForm.store_name.$pristine, 'has-success' : destForm.store_name.$valid && !destForm.store_name.$pristine}">
+	          		<div class="col-sm-2"><label for="store_name" class="control-label">Store Name</label> </div>
+	            	<div class="col-sm-10">
+	                	<input type="text" name="store_name" id="store_name" class="form-control" ng-model="dest.store_name" ng-minlength="3" ng-maxlength="200" required>
+		                <p class="help-block">
+		                  <span ng-show="destForm.store_name.$invalid && !destForm.store_name.$pristine">Store Name is required.</span>
+		                  <span ng-show="destForm.store_name.$error.minlength">Store Name is too short.</span>
+		                  <span ng-show="destForm.store_name.$error.maxlength">Store Name is too long.</span>
+		                </p>
+	            	</div>
+	          	</div>
+	        </div>
+		    <div class="row">
+				<div class="form-group" ng-class="{ 'has-error' : destForm.store_addr.$invalid && !destForm.store_addr.$pristine, 'has-success' : destForm.store_addr.$valid && !destForm.store_addr.$pristine}">
+	          		<div class="col-sm-2"><label for="store_addr" class="control-label">Address</label> </div>
+	            	<div class="col-sm-10">
+	                	<input type="text" name="store_addr" id="store_addr" class="form-control" ng-model="dest.store_addr" ng-minlength="3" ng-maxlength="200" required>
+		                <p class="help-block">
+		                  <span ng-show="destForm.store_addr.$invalid && !destForm.store_addr.$pristine">Address is required.</span>
+		                  <span ng-show="destForm.store_addr.$error.minlength">Address is too short.</span>
+		                  <span ng-show="destForm.store_addr.$error.maxlength">Address is too long.</span>
+		                </p>
+	            	</div>
+	          	</div>
+	        </div>
+		    <div class="row">
+	          	<div class="form-group col-sm-6" ng-class="{ 'has-error' : destForm.dest_city.$invalid && !destForm.dest_city.$pristine, 'has-success' : destForm.dest_city.$valid && !destForm.dest_city.$pristine}">
+	          		<div class="col-sm-4" ><label for="dest_city" class="control-label">City</label> </div>
+	            	<div class="col-sm-7">
+	                	<input type="text" name="dest_city" id="dest_city" class="form-control" ng-model="dest.dest_city" ng-minlength="3" ng-maxlength="100" required>
+		                <p class="help-block">
+		                  <span ng-show="destForm.dest_city.$invalid && !destForm.dest_city.$pristine">City is required.</span>
+		                  <span ng-show="destForm.dest_city.$error.minlength">City is too short.</span>
+		                  <span ng-show="destForm.dest_city.$error.maxlength">City is too long.</span>
+		                </p>
+	            	</div>
+	          	</div>
+	          	<div class="form-group col-sm-3" ng-class="{ 'has-error' : destForm.dest_postcode.$invalid && !destForm.dest_postcode.$pristine, 'has-success' : destForm.dest_postcode.$valid && !destForm.dest_postcode.$pristine}">
+	          		<div class="col-sm-4"><label for="dest_postcode" class="control-label">postcode</label> </div>
+	            	<div class="col-sm-7">
+	                	<input type="text" name="dest_postcode" id="dest_postcode" class="form-control" ng-model="dest.dest_postcode" ng-minlength="3" ng-maxlength="10" required>
+		                <p class="help-block">
+		                  <span ng-show="destForm.dest_postcode.$invalid && !destForm.dest_postcode.$pristine">postcode is required.</span>
+		                  <span ng-show="destForm.dest_postcode.$error.minlength">postcode is too short.</span>
+		                  <span ng-show="destForm.dest_postcode.$error.maxlength">postcode is too long.</span>
+		                </p>
+	            	</div>
+	          	</div>
+	          	<div class="form-group col-sm-3" ng-class="{ 'has-error' : destForm.dest_phone.$invalid && !destForm.dest_phone.$pristine, 'has-success' : destForm.dest_phone.$valid && !destForm.dest_phone.$pristine}">
+	          		<div class="col-sm-3 align-right"><label for="dest_phone" class="control-label">Phone</label> </div>
+	            	<div class="col-sm-9">
+	                	<input type="text" name="dest_phone" id="dest_phone" class="form-control" ng-model="dest.dest_phone" ng-minlength="3" ng-maxlength="15" required>
+		                <p class="help-block">
+		                  <span ng-show="destForm.dest_phone.$invalid && !destForm.dest_phone.$pristine">Phone is required.</span>
+		                  <span ng-show="destForm.dest_phone.$error.minlength">Phone is too short.</span>
+		                  <span ng-show="destForm.dest_phone.$error.maxlength">Phone is too long.</span>
+		                </p>
+	            	</div>
+	          	</div>
+		    </div>
+
+		    <div class="row" style="background:#F8F8F8 !important; border-top:1px solid #E5E5E5 !important;">
+		    	<div class="col-sm-10 pull-right">
+	 	            <button class="pull-right btn btn-lightred btn-ef mb-10 btn-cancel btn-own" ng-click="close()">Cancel</button>
+			    	<button class="pull-right btn btn-success btn-ef btn-ef-3 btn-ef-3c mb-10" ng-disabled="destForm.$invalid" >Submit <i class="fa fa-arrow-right"></i></button>
+		        </div>
+		    </div>
+		</form>
+	</div>
+</div>

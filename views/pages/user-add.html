@@ -1,0 +1,83 @@
+<div class="page-lightbox form-horizontal" id="user_add">
+    <!-- tile widget -->
+    <div class="tile-widget">
+         <form name="userForm" ng-submit="saveUser()" role="form" novalidate>
+             
+            <input type="hidden" name="userID" id="userID" class="form-control" ng-model="user.userID">
+            <div class="row">
+                <h2 class="page_title">Add New User</h2>
+            </div>
+            <div class="row">
+              <div class="form-group" ng-class="{ 'has-error' : userForm.firstname.$invalid && !userForm.firstname.$pristine, 'has-success' : userForm.firstname.$valid && !userForm.firstname.$pristine}">
+                <label for="firstname">First Name </label>
+                <input type="text" name="firstname" id="firstname" class="form-control" ng-model="user.firstName" ng-minlength="3" ng-maxlength="20" required>
+                <p class="help-block">
+                  <span ng-show="userForm.firstname.$invalid && !userForm.firstname.$pristine">FirstName is required.</span>
+                  <span ng-show="userForm.firstname.$error.minlength">FirstName is too short.</span>
+                  <span ng-show="userForm.firstname.$error.maxlength">FirstName is too long.</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group" ng-class="{ 'has-error' : userForm.lastname.$invalid && !userForm.lastname.$pristine, 'has-success' : userForm.lastname.$valid && !userForm.lastname.$pristine}">
+                <label for="lastname">Last Name </label>
+                <input type="text" name="lastname" id="lastname" class="form-control" ng-model="user.lastName" ng-minlength="3" ng-maxlength="20" required>
+                <p class="help-block">
+                  <span ng-show="userForm.lastname.$invalid && !userForm.lastname.$pristine">LastName is required.</span>
+                  <span ng-show="userForm.lastname.$error.minlength">LastName is too short.</span>
+                  <span ng-show="userForm.lastname.$error.maxlength">LastName is too long.</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group" ng-class="{ 'has-error' : (userForm.username.$invalid && !userForm.username.$pristine) || userForm.username.dup, 'has-success' : userForm.username.$valid && !userForm.username.$pristine && !userForm.username.dup}">
+                <label for="username">Username </label>
+                <input type="text" name="username" id="username" class="form-control" ng-model="user.username" ng-minlength="3" ng-maxlength="30" required ng-change="checkUserName()">
+                <p class="help-block">
+                  <span ng-show="userForm.username.$invalid && !userForm.username.$pristine">Username is required.</span>
+                  <span ng-show="userForm.username.$error.minlength">Username is too short.</span>
+                  <span ng-show="userForm.username.$error.maxlength">Username is too long.</span>
+                  <span ng-show="userForm.username.dup && !userForm.username.$pristine">Username already exists.</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group" ng-class="{ 'has-error' : (userForm.email.$invalid && !userForm.email.$pristine) || userForm.email.dup, 'has-success' : userForm.email.$valid && !userForm.email.$pristine && !userForm.email.dup}">
+                <label for="email">Email </label>
+                <input type="email" name="email" id="email" class="form-control" ng-model="user.email" required ng-change="checkEmail()">
+                <p class="help-block">
+                  <span ng-show="userForm.email.$invalid && !userForm.email.$pristine">Email is required.</span>
+                  <span ng-show="userForm.email.dup && !userForm.email.$pristine">Email already exists.</span>
+                </p>
+              </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12" ng-class="{ 'has-error' : userForm.password.$invalid && !userForm.password.$pristine, 'has-success' : userForm.password.$valid && !userForm.password.$pristine}">
+                  <label for="password">Password </label>
+                  <input type="password" name="password" id="password" class="form-control" ng-model="user.password" ng-minlength="6" required>
+                  <p class="help-block">
+                    <span ng-show="userForm.password.$invalid && !userForm.password.$pristine">Password is required.</span>
+                    <span ng-show="userForm.password.$error.minlength">Password is too short.</span>
+                  </p> 
+                </div>  
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12" ng-class="{ 'has-error' : userForm.role.$invalid && !userForm.role.$pristine, 'has-success' : userForm.role.$valid && !userForm.role.$pristine}">
+                <label for="role">Roles </label>
+                <select name="role" class="form-control mb-12" ng-model="user.role" required>
+                  <option value="">Select option...</option>
+                  <option value="1">Super Admin</option>
+                  <option value="2">Branch Manager</option>
+                  <option value="3">User</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-12">
+                  <button type="submit" ng-disabled="userForm.$invalid || userForm.email.dup || userForm.username.dup" class="btn btn-dark btn-border btn-rounded-20 btn-own" style="margin-top:20px;"> Save User </button>
+              </div>
+            </div>
+        </form>
+    </div>
+    <!-- end tile widget -->
+</div>

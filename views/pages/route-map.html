@@ -1,0 +1,83 @@
+<div ui-view>
+  <div class="pagecontent page-lightbox">
+
+
+    <!-- row -->
+    <div class="row">
+        <!-- tile -->
+        <section class="tile" fullscreen="isFullscreen01">
+
+          <!-- tile header -->
+          <div class="tile-header dvd dvd-btm">
+            <h1 class="custom-font"><strong>Google </strong>Map</h1>
+            <ul class="controls">
+              <li class="dropdown" uib-dropdown on-toggle="toggled(open)">
+
+                <a href uib-dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
+
+                <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+                  <li>
+                    <a href tile-control-toggle>
+                      <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
+                      <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href tile-control-refresh ng-click="ajaxFaker()">
+                      <fa name="refresh"></fa> Refresh
+                    </a>
+                  </li>
+                  <li>
+                    <a href tile-control-fullscreen ng-click="isFullscreen01 = !isFullscreen01">
+                      <fa name="expand"></fa> Fullscreen
+                    </a>
+                  </li>
+
+                </ul>
+
+              </li>
+              <li class="remove" ng-click="close();"><a href tile-control-close><i class="fa fa-times"></i></a></li>
+            </ul>
+          </div>
+          <!-- /tile header -->
+
+          <!-- tile body -->
+          <div class="tile-body" ng-controller="customMapCtrl">
+            <ui-gmap-google-map center="map.center" zoom="map.zoom" draggable="false" options="options">
+              <ui-gmap-polylines 
+                    models="map.polylines" 
+                    path="'path'" 
+                    stroke="'stroke'" 
+                    visible="'visible'"
+                    geodesic="'geodesic'" 
+                    fit="'false'" 
+                    editable="'editable'"
+                    draggable="'draggable'"
+                    static="true"></ui-gmap-polylines>
+
+              <ui-gmap-circle ng-repeat="c in map.circles track by c.id"
+                    center="c.center"
+                    stroke="map.circleOptions.stroke" 
+                    fill="map.circleOptions.fill"
+                    radius="map.circleOptions.radius"
+                    visible="map.circleOptions.visible" 
+                    geodesic="map.circleOptions.geodesic" 
+                    editable="map.circleOptions.editable" 
+                    draggable="map.circleOptions.draggable"
+                    clickable="map.circleOptions.clickable"></ui-gmap-circle>
+         
+            </ui-gmap-google-map>
+            
+          </div>
+                    
+
+          <!-- /tile body -->
+
+        </section>
+        <!-- /tile -->
+
+    </div>
+    <!-- /row -->
+
+  </div>
+</div>

@@ -1,0 +1,88 @@
+<div ui-view>
+<div class="page page-tables-bootstrap ng-scope">
+	
+	<section class="tile" fullscreen="isFullscreen07">
+		<!-- tile header -->
+		<div class="tile-header dvd dvd-btm">
+		    <h1 class="custom-font"><strong>Add News</strong></h1>
+		    <ul class="controls">
+	        	<li class="dropdown" uib-dropdown on-toggle="toggled(open)">
+			        <a href uib-dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
+			            <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+	          				<li>
+								<a href tile-control-toggle>
+									<span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
+									<span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
+								</a>
+							</li>
+							<li>
+					            <a href>
+					              	<fa name="refresh"></fa> Refresh
+					            </a>
+							</li>
+							<li>
+								<a href tile-control-fullscreen ng-click="isFullscreen07 = !isFullscreen07">
+									<fa name="expand"></fa> Fullscreen
+								</a>
+							</li>
+						</ul>
+
+	      		</li>
+	      		<li class="remove"><a href tile-control-close><i class="fa fa-times"></i></a></li>
+	   		</ul>
+	  	</div>
+	  	<!-- /tile header -->
+
+		<!-- tile widget -->
+		<div class="tile-widget">
+	        <form name="newsForm" ng-submit="saveNews()" role="form" novalidate>
+		    	<input type="hidden" name="newsID" id="newsID" class="form-control" ng-model="news.newsID">
+
+			    <div class="row">
+	              	<div class="form-group" ng-class="{ 'has-error' : newsForm.title.$invalid && !newsForm.title.$pristine, 'has-success' : newsForm.title.$valid && !newsForm.title.$pristine}">
+	              		<div class="col-sm-2 align-right"><label for="title">News Title</label> </div>
+	                	<div class="col-sm-10">
+		                	<input type="text" name="title" id="title" class="form-control" ng-model="news.newsTitle" ng-minlength="3" ng-maxlength="200" required>
+			                <p class="help-block">
+			                  <span ng-show="newsForm.title.$invalid && !newsForm.title.$pristine">Title is required.</span>
+			                  <span ng-show="newsForm.title.$error.minlength">Title is too short.</span>
+			                  <span ng-show="newsForm.title.$error.maxlength">Title is too long.</span>
+			                </p>
+	                	</div>
+	              	</div>
+			    </div>
+
+			    <div class="row">
+			    	<div class="col-sm-2 align-right"></div>
+					<div class="col-sm-10">
+			          	<span class="btn btn-default btn-border btn-rounded-20 mb-12 btn-custom" ng-click="showUploadDialog()">Add picture</span>
+		    			<input type="hidden" name="imgPath" id="imgPath" class="form-control" ng-model="news.imgPath">
+		    			<img ng-src="{{news.imgPath}}" class="img-responsive" >
+			      	</div>
+			    </div>
+
+			    <div class="row">
+	              	<div class="form-group" ng-class="{ 'has-error' : newsForm.news_content.$invalid && !newsForm.news_content.$pristine, 'has-success' : newsForm.news_content.$valid && !newsForm.news_content.$pristine}">
+	              		<div class="col-sm-2 align-right"><label for="news_content">Contents</label> </div>
+	                	<div class="col-sm-10">
+		                	<textarea name="news_content" id="news_content" class="form-control" ng-model="news.newsContent" required rows="12"></textarea>
+			                <p class="help-block">
+			                  <span ng-show="newsForm.news_content.$invalid && !newsForm.news_content.$pristine">Content is required.</span>
+			                  <span ng-show="newsForm.news_content.$error.minlength">Content is too short.</span>
+			                </p>
+	                	</div>
+	              	</div>
+			    </div>
+
+			    <div class="row">
+			    	<div class="col-sm-10 pull-right">
+		 	            <button class="pull-right btn btn-lightred btn-ef mb-10 btn-cancel btn-own" ui-sref="app.news">Cancel</button>
+				    	<button class="pull-right btn btn-success btn-ef btn-ef-3 btn-ef-3c mb-10" ng-disabled="newsForm.$invalid" >Submit <i class="fa fa-arrow-right"></i></button>
+	 	        </div>
+
+			</form>
+	  	</div>
+
+	</section>
+</div>
+</div>

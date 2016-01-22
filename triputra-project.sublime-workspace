@@ -1,0 +1,534 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"state",
+				"stateParams"
+			],
+			[
+				"center",
+				"centerOnMe"
+			],
+			[
+				"fa",
+				"false"
+			],
+			[
+				"Masonry",
+				"UiMasonryCtrl"
+			],
+			[
+				"add",
+				"add"
+			],
+			[
+				"Mason",
+				"UiMasonryCtrl"
+			],
+			[
+				"sc",
+				"scope"
+			],
+			[
+				"option_vale",
+				"option_values"
+			],
+			[
+				"sor",
+				"sort_order"
+			],
+			[
+				"ra",
+				"random"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "app/controllers/----Sales.php",
+			"settings":
+			{
+				"buffer_size": 1965,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "views/header.html",
+			"settings":
+			{
+				"buffer_size": 16405,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "styles/style.css",
+			"settings":
+			{
+				"buffer_size": 2876,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 29.0,
+		"selected_items":
+		[
+		],
+		"width": 467.0
+	},
+	"console":
+	{
+		"height": 125.0
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Volumes/MDATA/triputra/images/flags/Afghanistan.93ccdf57.png",
+		"/Volumes/MDATA/triputra/app/views/admin_dashboard.php",
+		"/Volumes/MDATA/triputra/scripts/app.js",
+		"/Volumes/MDATA/triputra/app/controllers/Api.php",
+		"/Volumes/MDATA/triputra/views/nav.html",
+		"/Volumes/MDATA/triputra/views/pages/route.html",
+		"/Volumes/MDATA/triputra/views/header.html",
+		"/Volumes/MDATA/triputra/views/pages/sales.html",
+		"/Volumes/MDATA/triputra/views/pages/upload.html",
+		"/Volumes/MDATA/triputra/views/pages/news-add.html",
+		"/Volumes/MDATA/triputra/views/pages/news.html",
+		"/Volumes/MDATA/triputra/views/pages/route-map.html",
+		"/Volumes/MDATA/triputra/views/pages/route-new-dest.html",
+		"/Volumes/MDATA/triputra/styles/main.1be6a35c.css",
+		"/Volumes/MDATA/triputra/scripts/vendor.js",
+		"/Volumes/MDATA/triputra/views/pages/reports.html",
+		"/Volumes/MDATA/triputra/views/pages/reports-person.html",
+		"/Volumes/MDATA/triputra/app/models/news.php",
+		"/Volumes/MDATA/triputra/app/models/user.php",
+		"/Volumes/MDATA/triputra/views/pages/route-detail.html",
+		"/Volumes/MDATA/triputra/views/pages/reports-detail.html",
+		"/Volumes/MDATA/triputra/views/tmpl/forms/upload.html",
+		"/Volumes/MDATA/triputra/views/pages/user-add.html",
+		"/Volumes/MDATA/triputra/views/pages/users.html",
+		"/Volumes/MDATA/triputra/views/tmpl/ui/alerts.html",
+		"/Volumes/MDATA/triputra/app/controllers/Admin.php",
+		"/Volumes/MDATA/triputra/views/tmpl/mail/compose.html",
+		"/Volumes/MDATA/triputra/app/controllers/Sales.php",
+		"/Volumes/MDATA/triputra/views/tmpl/maps/google.html",
+		"/Volumes/MDATA/triputra/views/tmpl/maps/leaflet.html",
+		"/Volumes/MDATA/triputra/views/pages/news_add.html",
+		"/Volumes/MDATA/triputra/views/tmpl/reports.html",
+		"/Volumes/MDATA/triputra/views/pages/route-new-dist.html",
+		"/Volumes/MDATA/triputra/views/tmpl/user-add.html",
+		"/Volumes/MDATA/triputra/views/tmpl/news_add.html",
+		"/Volumes/MDATA/triputra/views/tmpl/news.html",
+		"/Volumes/MDATA/triputra/views/tmpl/users.html",
+		"/Volumes/MDATA/triputra/views/tmpl/route.html",
+		"/Volumes/MDATA/triputra/styles/style.css",
+		"/Volumes/MDATA/triputra/views/tmpl/reports-detail.html",
+		"/Volumes/MDATA/triputra/views/tmpl/route-edit-store.html",
+		"/Volumes/MDATA/triputra/views/tmpl/material/dialog.html",
+		"/Volumes/MDATA/triputra/views/tmpl/route-detail.html",
+		"/Volumes/MDATA/triputra/views/tmpl/route-new-dist.html",
+		"/Volumes/MDATA/triputra/views/tmpl/route-map.html",
+		"/Volumes/MDATA/triputra/views/tmpl/calendar.html",
+		"/Volumes/MDATA/triputra/views/tmpl/charts.html",
+		"/Volumes/MDATA/triputra/views/tmpl/ui/navs.html",
+		"/Volumes/MDATA/triputra/views/tmpl/adduser.html",
+		"/Volumes/MDATA/triputra/views/tmpl/news/news_add.html",
+		"/Volumes/MDATA/triputra/views/tmpl/sales.html",
+		"/Volumes/MDATA/triputra/app/config/database.php",
+		"/Volumes/MDATA/triputra/views/tmpl/pages/login.html",
+		"/Volumes/MDATA/triputra/views/tmpl/ui/masonry.html",
+		"/Volumes/MDATA/triputra/views/tmpl/forms/validate.html",
+		"/Volumes/MDATA/triputra/app/config/routes.php",
+		"/Volumes/MDATA/triputra/views/tmpl/ui/general.html",
+		"/Volumes/MDATA/triputra/views/tmpl/app.html",
+		"/Volumes/MDATA/triputra/scripts/script.js",
+		"/Users/sergei/Documents/tmj_webadmin/app/minovate/Gruntfile.js",
+		"/Applications/MAMP/conf/apache/extra/httpd-vhosts.conf",
+		"/Users/sergei/Documents/tmj_webadmin/app/minovate/bower.json",
+		"/Users/sergei/Documents/Rails/Rails-Training/angular.min.js",
+		"/Users/sergei/Documents/Rails/Rails-Training/index.html",
+		"/Users/sergei/Documents/Rails/Rails-Training/app.js",
+		"/Volumes/G/web/prestashop/modules/threadflo/threadflo.php",
+		"/Volumes/G/web/opencart-2.1.0.1/admin/model/catalog/product.php",
+		"/Volumes/G/web/opencart-2.1.0.1/admin/controller/module/threadflo.php",
+		"/Volumes/G/web/opencart-2.1.0.1/admin/model/catalog/option.php",
+		"/Volumes/192.168.0.136/web/prestashop/modules/threadflo/threadflo.php",
+		"/Volumes/G/History/Paypal/Kyle/backup/threadflo-1118/threadflo.php",
+		"/Volumes/192.168.0.136/web/opencart-2.1.0.1/admin/model/catalog/product.php",
+		"/Users/sergei/Library/Application Support/Sublime Text 2/Packages/Default/Preferences.sublime-settings",
+		"/Volumes/192.168.0.136/web/opencart-2.1.0.1/admin/controller/catalog/product.php",
+		"/Users/sergei/Library/Application Support/Sublime Text 2/Packages/User/HTML.sublime-settings",
+		"/Users/sergei/Documents/Rails/readit/app/views/welcome/sample.html.erb",
+		"/Users/sergei/Library/Application Support/Sublime Text 2/Packages/User/Preferences.sublime-settings",
+		"/Users/sergei/Documents/Rails/readit/app/views/welcome/1",
+		"/Users/sergei/Work/RoR/Spree-Commerce/app/assets/stylesheets/application.css",
+		"/Users/sergei/Work/RoR/Spree-Commerce/app/views/layouts/application.html.erb",
+		"/Users/sergei/Work/Ruby/train.rb",
+		"/Users/sergei/Work/RoR/Spree-Commerce/config/initializers/devise.rb",
+		"/Users/sergei/Work/RoR/Spree-Commerce/spree_simple_sales/app/controllers/spree/home_controller_decorator.rb",
+		"/Users/sergei/Work/RoR/Spree-Commerce/spree_simple_sales/spree_simple_sales.gemspec",
+		"/Users/sergei/Work/RoR/Spree-Commerce/spree_simple_sales/bin/rails",
+		"/Users/sergei/Documents/Spree.sublime-project",
+		"/Users/sergei/Work/RoR/SpreeCommerce/app/controllers/application_controller.rb",
+		"/Users/sergei/Work/RoR/SpreeCommerce/Gemfile",
+		"/Users/sergei/Work/RoR/SpreeCommerce/app/controllers/guess.rb",
+		"/Volumes/192.168.0.136/web/prestashop/modules/themeconfigurator/themeconfigurator.php",
+		"/Volumes/192.168.0.136/web/prestashop/modules/blocklayered/blocklayered.tpl",
+		"/Volumes/192.168.0.136/web/prestashop/modules/threadflo/views/js/admin.js",
+		"/Volumes/192.168.0.136/web/artprint/modules/importproducts/importproducts.php",
+		"/Users/sergei/Work/RoR/SpreeCommerce/db/schema.rb",
+		"/Users/sergei/Work/RoR/SpreeCommerce/db/migrate/20151116131623_spree_one_two.spree.rb"
+	],
+	"find":
+	{
+		"height": 42.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+			"/Volumes/MDATA/triputra",
+			"/Volumes/MDATA/triputra/app",
+			"/Volumes/192.168.0.136/web/opencart-2.1.0.1/admin",
+			"/Users/sergei/Work/RoR/Spree-Commerce",
+			"/Volumes/192.168.0.136/web/prestashop/modules",
+			"/Volumes/192.168.0.136/web/prestashop/modules/themeconfigurator",
+			"",
+			"spree",
+			"/",
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"get_coo",
+			"cookie",
+			"checklogin",
+			"CENGKARENG",
+			"function getv",
+			"loginct",
+			"leaflet",
+			"center",
+			"latlng",
+			"center",
+			"latlng",
+			"center",
+			"leaflet",
+			"uiGmapgoogle-maps",
+			"center",
+			"leaflet",
+			"idkey",
+			"leaflet",
+			"map",
+			"getUsers",
+			"getAllUsers",
+			"checklogin",
+			"checkLogin\n\n\n",
+			"login",
+			"checklogin",
+			"checkEmail",
+			"getUser",
+			"checklogin",
+			"getnews",
+			"LightBoxCtrl",
+			"lightboxctrl",
+			"UserFormCtrl",
+			"LightBoxCtrl",
+			"editU",
+			"showAddDialog",
+			"$mdDialog.show",
+			"advanced",
+			"$mdDialog.show",
+			"lightboxctrl",
+			"$mdDialog.show",
+			"lightboxctrl",
+			"checkEmail",
+			"data",
+			"}\">\n",
+			"checkExistEmail",
+			"email.dup",
+			"provider",
+			"user:",
+			"user.",
+			"user:",
+			"user.",
+			"lg",
+			"getAllUser",
+			"rootScope",
+			"newsctrl",
+			"customMapCtrl",
+			"loadAreaInfo",
+			"masonry",
+			"lightboxC",
+			"dialogC",
+			"LightBoxCtrl",
+			"dialogC",
+			"dialog",
+			".cancel",
+			"LightBoxCtrl",
+			"lightController",
+			"userForm",
+			"checkEmail",
+			"lightcon",
+			"lightController",
+			"checkLogin",
+			"brandingColor",
+			"MainCtrl",
+			"rootScope",
+			"rootscope",
+			"firstName",
+			"rootScope",
+			"checkl",
+			"check",
+			"rootS",
+			"cookie",
+			"checklogin",
+			"brandingColor",
+			"{{",
+			"main.settings",
+			"checklogin",
+			"login",
+			"checklo",
+			"checklogin",
+			"lengt",
+			"logout",
+			"set_cookie",
+			"invalid",
+			"checkLogin",
+			"email",
+			"checkLogin",
+			"login",
+			"factory",
+			"lightcontr",
+			"zoom",
+			"lightController",
+			"customMapCtrl",
+			"tes",
+			"route-ma",
+			"customMapCtrl",
+			"session",
+			"admin",
+			"@media",
+			"app.dashboard",
+			"branding scheme-default",
+			"logo",
+			"function",
+			"getNotUploadedItems",
+			"uploaded",
+			"()",
+			"FileUploader",
+			"file_name",
+			"img_ur",
+			"url",
+			"base_",
+			"light",
+			"getNotUploadedItems",
+			"lightco",
+			"mdd",
+			"answer",
+			"base",
+			"FormUploadCtrl",
+			"UploadCtrl"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"data.",
+			"LightBoxCtrl",
+			"api_url",
+			"destForm",
+			"dest",
+			"base_url",
+			"count"
+		],
+		"reverse": false,
+		"show_context": false,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 2,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "app/controllers/----Sales.php",
+					"settings":
+					{
+						"buffer_size": 1965,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "views/header.html",
+					"settings":
+					{
+						"buffer_size": 16405,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								13421,
+								13421
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 5706.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "styles/style.css",
+					"settings":
+					{
+						"buffer_size": 2876,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2032,
+								2032
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/CSS/CSS.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 233.0,
+						"zoom_level": 1.0
+					},
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 0.0
+	},
+	"input":
+	{
+		"height": 31.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 100.0
+	},
+	"output.find_results":
+	{
+		"height": 124.0
+	},
+	"replace":
+	{
+		"height": 64.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+			[
+				"product",
+				"admin/model/catalog/product.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+			[
+				"",
+				"/Users/sergei/Documents/untitled.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"show_minimap": false,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 214.0,
+	"status_bar_visible": false
+}

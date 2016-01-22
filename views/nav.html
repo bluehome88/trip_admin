@@ -1,0 +1,17 @@
+<div id="sidebar-wrap" ng-controller="NavCtrl">
+  <uib-accordion close-others="oneAtTime" slimscroll="{height: '100%'}">
+
+    <uib-accordion-group is-open="status.isFirstOpen" ng-class="{'open': status.isFirstOpen, 'closed': !status.isFirstOpen}">
+      <uib-accordion-heading>
+        Navigation <i class="pull-right fa" ng-class="{'fa-angle-up': status.isFirstOpen, 'fa-angle-down': !status.isFirstOpen}"></i>
+      </uib-accordion-heading>
+      <ul id="navigation" nav-collapse ripple>
+        <li ui-sref-active="active"><a ui-sref="app.sales"><fa name="dashboard"></fa> <span>{{ 'Menu.SALES' | translate }}</span></a></li>
+        <li ui-sref-active="active"><a ui-sref="app.route"><fa name="list"></fa> <span>{{ 'Menu.ROUTE' | translate }}</span></a></li>
+        <li ui-sref-active="active"><a ui-sref="app.reports"><fa name="list"></fa> <span>{{ 'Menu.REPORT' | translate }}</span></a></li>
+        <li ui-sref-active="active"><a ui-sref="app.users"><fa name="pencil"></fa> <span>{{ 'Menu.USER' | translate }}</span></a></li>
+        <li ui-sref-active="active" ng-show="$root.userInfo.role==1"><a ui-sref="app.news"><fa name="puzzle-piece"></fa> <span>{{ 'Menu.NEWS' | translate }}</span></a></li>
+      </ul>
+    </uib-accordion-group>
+  </uib-accordion>
+</div>

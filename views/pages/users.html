@@ -1,0 +1,134 @@
+<div class="page page-tables-bootstrap ng-scope">
+<!-- tile -->
+<section class="tile" fullscreen="isFullscreen07">
+
+  <!-- tile header -->
+  <div class="tile-header dvd dvd-btm">
+    <h1 class="custom-font"><strong>Advanced</strong> Table</h1>
+    <ul class="controls">
+      <li class="dropdown" uib-dropdown on-toggle="toggled(open)">
+
+        <a href uib-dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
+
+        <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
+          <li>
+            <a href tile-control-toggle>
+              <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
+              <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
+            </a>
+          </li>
+          <li>
+            <a href tile-control-refresh ng-click="ajaxFaker()">
+              <fa name="refresh"></fa> Refresh
+            </a>
+          </li>
+          <li>
+            <a href tile-control-fullscreen ng-click="isFullscreen07 = !isFullscreen07">
+              <fa name="expand"></fa> Fullscreen
+            </a>
+          </li>
+
+        </ul>
+
+      </li>
+      <li class="remove"><a href tile-control-close><i class="fa fa-times"></i></a></li>
+    </ul>
+  </div>
+  <!-- /tile header -->
+
+  <!-- tile widget -->
+  <div class="tile-widget">
+
+    <div class="row">
+
+      <div class="col-sm-4">
+          <h2 class="page_title">User Management</h2>
+      </div>
+
+      <div class="col-sm-4">
+          <button ng-click="addUserForm($event)" class="btn btn-dark btn-border btn-rounded-20 btn-own" ng-show="$root.userInfo.role==1">+ Add user here</button>
+      </div>
+
+      <div class="col-sm-4">
+        <div class="input-group">
+          <input type="text" class="input-sm form-control" placeholder="Search..." ng-model="search_text" ng-change="getUsers()">
+          <span class="input-group-btn">
+            <button class="btn btn-sm btn-default" type="button" ng-click="getUsers()">Go!</button>
+          </span>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+  <!-- /tile widget -->
+
+  <!-- tile body -->
+  <div class="tile-body p-0">
+    <div class="table-responsive">
+      <table class="table mb-0">
+        <thead>
+          <tr>
+            <th style="width:20px;">
+              <label class="checkbox checkbox-custom checkbox-custom-sm m-0">
+                <input type="checkbox" ng-model="selectedAll" ng-change="selectAll()"><i></i>
+              </label>
+            </th>
+            <th>UserName</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Roles</th>
+            <th></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="(k, user) in users" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage ">
+            <td><label class="checkbox checkbox-custom checkbox-custom-sm m-0"><input type="checkbox" ng-model="user.selected"><i></i></label></td>
+            <td>{{user.username}}</td>
+            <td>{{user.firstName}}</td>
+            <td>{{user.lastName}}</td>
+            <td>{{user.email}}</td>
+            <td>{{showRoleLang(user.role)}}</td>
+            <td>
+              <span ng-click="editUserForm($event, user.userID)" class="text-success">Edit</span>
+            </td>
+            <td>
+              <span ng-click="deleteUser(user.userID)" class="text-lightred">Delete</span>
+            </td>
+          </tr>
+          <tr ng-hide="users.length">
+            <td colspan = 7 align="center"> There is no result!</td>
+          </tr>          
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- /tile body -->
+
+  <!-- tile footer -->
+  <div class="tile-footer dvd dvd-top">
+    <div class="row"  ng-show="users.length">
+
+      <div class="col-sm-5 hidden-xs">
+      </div>
+
+      <div class="col-sm-3 text-center">
+        <small class="text-muted">showing {{(currentPage-1) * perpage + 1 }} - {{to_limit}} of {{users.length}} items</small>
+      </div>
+
+      <div class="col-sm-4 text-right">
+        <ul class="pagination pagination-sm m-0">
+          <li><a href ng-class="{'disable': currentPage == 1}" ng-click="setpage(currentPage-1)"><i class="fa fa-chevron-left"></i></a></li>
+          <li class="page_number" ng-repeat="user in users" ng-if="page=($index/perpage)+1; ($index % perpage)==0"><a href ng-class="{'active': page==currentPage}" ng-click="setpage(page)">{{page}}</a></li>
+          <li><a href ng-class="{'disable': currentPage>=users.length/perpage && currentPage < users.length/perpage +1}" ng-click="setpage(currentPage+1)"><i class="fa fa-chevron-right"></i></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- /tile footer -->
+
+</section>
+<!-- /tile -->
+</div>

@@ -86,10 +86,6 @@ class User extends CI_Model
 		return $this->_db->delete( $this->table_name );
 	}
 
-	public function checkPermission(){
-
-	}
-
 	public function checkLogin( $email, $password ){
 
 		$arr = $this->getUsers( "(`email`='".$email."' OR `username`='".$email."') AND `password`='".$password."'" );

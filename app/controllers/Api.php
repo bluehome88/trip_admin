@@ -7,30 +7,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Api extends CI_Controller {
 
-	/**
-	 * Index Page for this controller.
-	 *
-	 * Maps to the following URL
-	 * 		http://example.com/index.php/welcome
-	 *	- or -
-	 * 		http://example.com/index.php/welcome/index
-	 *	- or -
-	 * Since this controller is set as the default controller in
-	 * config/routes.php, it's displayed at http://example.com/
-	 *
-	 * So any other public methods not prefixed with an underscore will
-	 * map to /index.php/welcome/<method_name>
-	 * @see http://codeigniter.com/user_guide/general/urls.html
-	 */
 	public function __construct(){
 
 		parent::__construct();
 		
-		//$this->output->enable_profiler(TRUE);
 		$this->load->helper('cookie');
 		$this->load->helper('url');
-		$this->load->model('user');
-		$this->load->model('news');
+		
+		// load models
+		$this->load->model('User');
+		$this->load->model('News');
+		$this->load->model('relations');
+
 		$this->load->library('session');
 		date_default_timezone_set('America/Chicago');
 	}
@@ -48,7 +36,7 @@ class Api extends CI_Controller {
 			return '';
 	}
 	
-	// ------- start News block -------//
+	// ------- start User block -------//
 	public function checkLogin(){
 
 		$arrReturn = array();
@@ -69,7 +57,7 @@ class Api extends CI_Controller {
 
 			if( $email == "" || $password == "" )
 			{
-				echo json_encode(array("status"=>"failed", "error_message"=>"Empty Email or Password!")); return;
+				echo json_encode(array("status"=>"error", "error_message"=>"Empty Email or Password!")); return;
 			}
 
 			$res = $user->checkLogin( $email, $password );
@@ -85,9 +73,9 @@ class Api extends CI_Controller {
 				echo json_encode( $arrReturn );
 			}
 			else if(isset($res->role))
-				echo json_encode(array("status"=>"failed", "error_message"=>"Your account isn't Admin")); 
+				echo json_encode(array("status"=>"error", "error_message"=>"Your account isn't Admin")); 
 			else
-				echo json_encode(array("status"=>"failed", "error_message"=>"Invalid Email or Password!")); 
+				echo json_encode(array("status"=>"error", "error_message"=>"Invalid Email or Password!")); 
 		}
 		return;
 	}
@@ -207,70 +195,77 @@ class Api extends CI_Controller {
 	// ------- start Orders block ------- //
 	public function getOrders(){
 
-		$arrOrders = array( array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Mark", "lastName"=>"Otto", "orderDate"=>"21 Nov 2015","orderQty"=>7,"storeName"=>"Store A" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-							array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),
-					);
+		/*
+			$arrOrder Row Data fields
+			array( 	"orderID"=>1, 
+					"firstName"=> "Jennifer", 
+					"lastName"=>"Minely", 
+					"orderDate"=>"23 Nov 2015",
+					"orderQty"=>15,
+					"storeName"=>"Store A,B" )
+		*/
+		$arrOrders = array();
+		$arrOrders = $this->relations->getOrders();
 
 		echo json_encode( $arrOrders );
+	}
+
+	public function getOrderDetails(){
+		
+		if( !$this->getValue("orderID") ){
+			echo "error";
+			die;
+		}
+
+		$arrOrderInfo 	= $this->relations->getOrders("orderID=".$this->getValue("orderID"));
+		$arrProducts 	= $this->relations->getOrderDetailInfo(1);
+
+		$arrReturn = array(	
+								"store_name" 	=> $arrOrderInfo[0]->storeName, 
+								"person_name" 	=> $arrOrderInfo[0]->firstName." ".$arrOrderInfo[0]->lastName,
+								"order_date" 	=> $arrOrderInfo[0]->orderDate,
+								"product_info" 	=> $arrProducts
+														
+							);
+		
+		echo json_encode( $arrReturn );
 	}
 	// ------- end Orders block ------- //
 
 	// ------- start Report block ------- //
+	private function calcCompletionRate( $user_id ){
+		return $user_id;
+	}
+
 	public function getReports(){
 
-		$arrReports = array( array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 6", "completion"=>"90" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 4", "completion"=>"80" ),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 1", "completion"=>"70" ),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"1", "firstName"=> "Jennifer", "lastName"=>"Minely", "Area"=>"District 2", "completion"=>"80" ),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 5", "completion"=>"90"),
-							array( "userID"=>"2", "firstName"=> "Mark", "lastName"=>"Otto", "Area"=>"District 7", "completion"=>"80"),
+		$arrUsers = $this->user->getUsers();
+		$arrReturn = array(); 
 
-					);
+		/*foreach( $arrUsers as $k => $val){
+			$arrReturn[$k] = $val;
+			$arrReturn[$k]->completion = $this->calcCompletionRate( $val->userID );
+		}*/
+		/*
+		Row Data Fields 
+		array( 
+			"userID"=>"2", 
+			"firstName"=> "Mark", 
+			"lastName"=>"Otto", 
+			"areaInfo"=>"District 4", 
+			"completion"=>"80" ),
 
-		echo json_encode( $arrReports );
+		);*/
+
+		echo json_encode( $arrReturn );
 	}
 
 	public function getPersonCompleteReports( ){
+
+		if( !$this->getValue("userID") ){
+			echo "error";
+			die;
+		}
 
 		$arrPersonReports = array(
 				array( "comp_date"=>"23 Dec 2015", "Area"=>"District 6", "daily_completion"=>"90" ),
@@ -311,4 +306,36 @@ class Api extends CI_Controller {
 		    echo 'No files';
 		}
 	}
+
+
+	// -- Part of Route -- //
+	public function getAreaList(){
+
+		$arrAreaList = array(
+			array( "id"=>"1", "area_code"=>"", "name"=>"Scooby Doo" ),
+			array( "id"=>"2", "area_code"=>"", "name"=>"Shaggy Rodgers" ),
+			array( "id"=>"3", "area_code"=>"", "name"=>"Fred Jones" ),
+			array( "id"=>"4", "area_code"=>"", "name"=>"Scooby" ),
+			array( "id"=>"5", "area_code"=>"", "name"=>"Daphne Blake" ),
+			array( "id"=>"6", "area_code"=>"", "name"=>"Velma Dinkley" ),
+			array( "id"=>"7", "area_code"=>"", "name"=>"Fred Jones" ),
+			array( "id"=>"8", "area_code"=>"", "name"=>"Daphne Blake" ),
+			array( "id"=>"9", "area_code"=>"", "name"=>"Velma Dinkley" ),
+		);
+		echo json_encode( $arrAreaList );
+	}
+
+	public function getWeeklyRoutes(){
+
+	}
+
+	public function getBiweeklyRoutes(){
+
+	}
+
+	public function getRouteDetails(){
+
+	}
+
+	// -- end of Route -- //
 }

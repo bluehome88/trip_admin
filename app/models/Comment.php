@@ -1,12 +1,12 @@
 <?php
 /*
-	Date: 2016-01
+	Date: 2016-03
 	Author: BlueSky
 */
-class News extends CI_Model
+class Comment extends CI_Model
 {
 	private $_db = null; 
-	private $table_name = 'news'; 
+	private $table_name = 'comments'; 
 
 	public function __construct(){
 
@@ -17,8 +17,8 @@ class News extends CI_Model
 		$this->_db->order_by("date_added", "DESC");
 	}
 
-	/* get All News*/
-	public function getNews( $where = '' ){
+	/* get All Comment*/
+	public function getComments( $where = '' ){
 
 		$this->_db->select('*');
 
@@ -37,19 +37,19 @@ class News extends CI_Model
 	}
 
 
-	public function getActiveNews(){
+	public function getActiveComments(){
 
-		return $this->getNews( 'status = 1' );
+		return $this->getComments( 'active = 1' );
 	}
-	/* get News by newsID*/
-	public function getNewsById( $newsID ){
+	/* get Comment by commentID*/
+	public function getCommentById( $commentID ){
 
-		if( !$newsID )
+		if( !$commentID )
 			return false;
 
 		$this->_db->select('*');
 
-		$this->_db->where( "`newsID`=".$newsID );
+		$this->_db->where( "`commentID`=".$commentID );
 	
 		$query = $this->_db->get();
 
@@ -62,31 +62,30 @@ class News extends CI_Model
 		return false;
 	}
 
-	public function addNews( $newsData ){
+	public function addComment( $commentData ){
 
-		$newsData['date_added'] 	= date("Y-m-d H:i:s");
-		$newsData['date_updated'] 	= date("Y-m-d H:i:s");
+		$commentData['date_added'] 	= date("Y-m-d");
 
-		return $this->_db->insert( $this->table_name, $newsData );
+		return $this->_db->insert( $this->table_name, $commentData );
 	}
 
-	public function updateNews( $newsData ){
+	public function updateComment( $commentData ){
 
-		if( !$newsData['newsID'] )
+		if( !$commentData['commentID'] )
 			return false;
 
-		foreach( $newsData as $key => $value )
+		foreach( $commentData as $key => $value )
 			$this->_db->set( $key, $value );
 	
 		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
 
-		$this->_db->where( "newsID", $newsData['newsID'] );
+		$this->_db->where( "commentID", $commentData['commentID'] );
 		return $this->_db->update( $this->table_name );
 	}
 
-	public function deleteNews( $newsID ){
+	public function deleteComment( $commentID ){
 
-		$this->_db->where("`newsID` = {$newsID}");
+		$this->_db->where("`commentID` = {$commentID}");
 		return $this->_db->delete( $this->table_name );
 	}
 }

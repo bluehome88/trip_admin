@@ -25,7 +25,7 @@ form .row{ margin-top:15px;}
 .tab-content{ margin-top:30px;}
 #select_area{ margin:0 !important; border:1px solid #959595;background:#F0F4F6;}
 #select_area span{color:#2b3543;margin:0 5px 6px 5px;}
-.table-responsive{ margin-top:15px;}
+.table-responsive{ margin-top:5px;}
 
 .page-lightbox{ width:100%;}
 .page-lightbox .row{ margin:0;}
@@ -38,7 +38,8 @@ form .row{ margin-top:15px;}
 #user_add .btn.btn-own{ padding: 4px 20px; margin-bottom:30px;}
 #header .branding a.brand{ background: transparent url("../images/logo.png") no-repeat scroll 0px 10px; width:100px; }
 .dropdown.nav-profile .dropdown-menu{min-width:165px !important;}
-
+.page_title { color: #51445F;}
+.detail_description{ color: #51445F; line-height: 13px;}
 @media only screen and (min-width: 768px) {
 	.align-right{ text-align:right;} 
 }
@@ -50,3 +51,5 @@ form .row{ margin-top:15px;}
 	}
 }
 
+.tile-widget { padding:35px 15px 15px 25px !important;}
+.masonry-brick .tile{ background:#eee !important; border:1px solid #eee; border-radius: 2px;}

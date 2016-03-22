@@ -1,0 +1,77 @@
+<div ui-view>
+    <div class="page page-tables-bootstrap ng-scope">
+        <section class="tile" fullscreen="isFullscreen07">
+            <!-- tile header -->
+
+            <!-- /tile header -->
+            <!-- tile widget -->
+            <div class="tile-widget">
+
+              <div class="row">
+
+                <div class="col-sm-6">
+                    <h2 class="page_title">Sales Detail</h2>
+                    <div>
+                        <p class="detail_description">{{order.store_name}}</p>
+                        <p class="detail_description">Sales Person: {{order.person_name}}</p>
+                        <p class="detail_description">Order Date: {{order.order_date | date:'dd MMM yyyy'}}</p>
+                    </div>
+                </div>
+              </div>
+            </div>
+            <!-- /tile widget -->
+
+              <!-- tile body -->
+              <div class="tile-body p-0">
+
+                <div class="table-responsive">
+                  <table class="table mb-0">
+                    <thead>
+                      <tr>
+                        <th>No</th>
+                        <th>Product Name</th>
+                        <th>Product Category</th>
+                        <th>Order Qty</th>
+                        <th>Price</th>
+                        <th>Total Price</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="product in order.product_info" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
+                        <td>{{$index+1}}</td>
+                        <td class="blue-cell">{{product.product_name}}</td>
+                        <td>{{product.categoryName}}</td>
+                        <td class="blue-cell">{{product.qty}}</td>
+                        <td>{{product.price}}</td>
+                        <td>{{product.price * product.qty}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <!-- /tile body -->
+
+              <!-- tile footer -->
+              <div class="tile-footer dvd dvd-top">
+                <div class="row" ng-show="order.product_info.length > perpage">
+
+                  <div class="col-sm-5 hidden-xs">
+                  </div>
+
+                  <div class="col-sm-3 text-center">
+                    <small class="text-muted">showing {{(currentPage-1) * perpage + 1 }} - {{to_limit}} of {{order.product_info.length}} items</small>
+                  </div>
+
+                  <div class="col-sm-4 text-right">
+                    <ul class="pagination pagination-sm m-0">
+                      <li><a href ng-class="{'disable': currentPage == 1}" ng-click="setpage(currentPage-1)"><i class="fa fa-chevron-left"></i></a></li>
+                      <li class="page_number" ng-repeat="order in order.product_info" ng-if="page=($index/perpage)+1; ($index % perpage)==0"><a href ng-class="{'active': page==currentPage}" ng-click="setpage(page)">{{page}}</a></li>
+                      <li><a href ng-class="{'disable': currentPage>=order.product_info.length/perpage && currentPage < order.product_info.length/perpage +1}" ng-click="setpage(currentPage+1)"><i class="fa fa-chevron-right"></i></a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <!-- /tile footer -->
+        </section>
+    </div>
+</div>

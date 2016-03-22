@@ -47,30 +47,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "app/controllers/----Sales.php",
-			"settings":
-			{
-				"buffer_size": 1965,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "views/header.html",
-			"settings":
-			{
-				"buffer_size": 16405,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "styles/style.css",
-			"settings":
-			{
-				"buffer_size": 2876,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"command_palette":
@@ -96,14 +72,16 @@
 	},
 	"file_history":
 	[
+		"/Volumes/MDATA/triputra/views/header.html",
+		"/Volumes/MDATA/triputra/app/controllers/----Sales.php",
+		"/Volumes/MDATA/triputra/styles/style.css",
+		"/Volumes/MDATA/triputra/views/pages/sales.html",
 		"/Volumes/MDATA/triputra/images/flags/Afghanistan.93ccdf57.png",
 		"/Volumes/MDATA/triputra/app/views/admin_dashboard.php",
 		"/Volumes/MDATA/triputra/scripts/app.js",
 		"/Volumes/MDATA/triputra/app/controllers/Api.php",
 		"/Volumes/MDATA/triputra/views/nav.html",
 		"/Volumes/MDATA/triputra/views/pages/route.html",
-		"/Volumes/MDATA/triputra/views/header.html",
-		"/Volumes/MDATA/triputra/views/pages/sales.html",
 		"/Volumes/MDATA/triputra/views/pages/upload.html",
 		"/Volumes/MDATA/triputra/views/pages/news-add.html",
 		"/Volumes/MDATA/triputra/views/pages/news.html",
@@ -134,7 +112,6 @@
 		"/Volumes/MDATA/triputra/views/tmpl/news.html",
 		"/Volumes/MDATA/triputra/views/tmpl/users.html",
 		"/Volumes/MDATA/triputra/views/tmpl/route.html",
-		"/Volumes/MDATA/triputra/styles/style.css",
 		"/Volumes/MDATA/triputra/views/tmpl/reports-detail.html",
 		"/Volumes/MDATA/triputra/views/tmpl/route-edit-store.html",
 		"/Volumes/MDATA/triputra/views/tmpl/material/dialog.html",
@@ -370,90 +347,8 @@
 	"groups":
 	[
 		{
-			"selected": 2,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "app/controllers/----Sales.php",
-					"settings":
-					{
-						"buffer_size": 1965,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/PHP/PHP.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "views/header.html",
-					"settings":
-					{
-						"buffer_size": 16405,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								13421,
-								13421
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 5706.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "styles/style.css",
-					"settings":
-					{
-						"buffer_size": 2876,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2032,
-								2032
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 233.0,
-						"zoom_level": 1.0
-					},
-					"type": "text"
-				}
 			]
 		}
 	],
@@ -529,6 +424,6 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 214.0,
+	"side_bar_width": 250.0,
 	"status_bar_visible": false
 }

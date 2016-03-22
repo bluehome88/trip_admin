@@ -1,12 +1,12 @@
 <?php
 /*
-	Date: 2016-01
+	Date: 2016-03
 	Author: BlueSky
 */
-class News extends CI_Model
+class Topic extends CI_Model
 {
 	private $_db = null; 
-	private $table_name = 'news'; 
+	private $table_name = 'topics'; 
 
 	public function __construct(){
 
@@ -17,8 +17,8 @@ class News extends CI_Model
 		$this->_db->order_by("date_added", "DESC");
 	}
 
-	/* get All News*/
-	public function getNews( $where = '' ){
+	/* get All Topic*/
+	public function getTopics( $where = '' ){
 
 		$this->_db->select('*');
 
@@ -37,19 +37,20 @@ class News extends CI_Model
 	}
 
 
-	public function getActiveNews(){
+	public function getActiveTopics(){
 
-		return $this->getNews( 'status = 1' );
+		return $this->getTopics( 'active = 1' );
 	}
-	/* get News by newsID*/
-	public function getNewsById( $newsID ){
 
-		if( !$newsID )
+	/* get Topic by topicID*/
+	public function getTopicById( $topicID ){
+
+		if( !$topicID )
 			return false;
 
 		$this->_db->select('*');
 
-		$this->_db->where( "`newsID`=".$newsID );
+		$this->_db->where( "`topicID`=".$topicID );
 	
 		$query = $this->_db->get();
 
@@ -62,31 +63,30 @@ class News extends CI_Model
 		return false;
 	}
 
-	public function addNews( $newsData ){
+	public function addTopic( $topicData ){
 
-		$newsData['date_added'] 	= date("Y-m-d H:i:s");
-		$newsData['date_updated'] 	= date("Y-m-d H:i:s");
+		$topicData['date_added'] 	= date("Y-m-d H:i:s");
 
-		return $this->_db->insert( $this->table_name, $newsData );
+		return $this->_db->insert( $this->table_name, $topicData );
 	}
 
-	public function updateNews( $newsData ){
+	public function updateTopic( $topicData ){
 
-		if( !$newsData['newsID'] )
+		if( !$topicData['topicID'] )
 			return false;
 
-		foreach( $newsData as $key => $value )
+		foreach( $topicData as $key => $value )
 			$this->_db->set( $key, $value );
 	
 		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
 
-		$this->_db->where( "newsID", $newsData['newsID'] );
+		$this->_db->where( "topicID", $topicData['topicID'] );
 		return $this->_db->update( $this->table_name );
 	}
 
-	public function deleteNews( $newsID ){
+	public function deleteTopic( $topicID ){
 
-		$this->_db->where("`newsID` = {$newsID}");
+		$this->_db->where("`topicID` = {$topicID}");
 		return $this->_db->delete( $this->table_name );
 	}
 }

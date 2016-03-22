@@ -3,37 +3,7 @@
 <section class="tile" fullscreen="isFullscreen07">
 
   <!-- tile header -->
-  <div class="tile-header dvd dvd-btm">
-    <h1 class="custom-font"><strong>Advanced</strong> Table</h1>
-    <ul class="controls">
-      <li class="dropdown" uib-dropdown on-toggle="toggled(open)">
-
-        <a href uib-dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
-
-        <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
-          <li>
-            <a href tile-control-toggle>
-              <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
-              <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
-            </a>
-          </li>
-          <li>
-            <a href tile-control-refresh ng-click="ajaxFaker()">
-              <fa name="refresh"></fa> Refresh
-            </a>
-          </li>
-          <li>
-            <a href tile-control-fullscreen ng-click="isFullscreen07 = !isFullscreen07">
-              <fa name="expand"></fa> Fullscreen
-            </a>
-          </li>
-
-        </ul>
-
-      </li>
-      <li class="remove"><a href tile-control-close><i class="fa fa-times"></i></a></li>
-    </ul>
-  </div>
+  
   <!-- /tile header -->
 
   <!-- tile widget -->
@@ -41,21 +11,12 @@
 
     <div class="row">
 
-      <div class="col-sm-4">
+      <div class="col-sm-8">
           <h2 class="page_title">User Management</h2>
       </div>
 
-      <div class="col-sm-4">
-          <button ng-click="addUserForm($event)" class="btn btn-dark btn-border btn-rounded-20 btn-own" ng-show="$root.userInfo.role==1">+ Add user here</button>
-      </div>
-
-      <div class="col-sm-4">
-        <div class="input-group">
-          <input type="text" class="input-sm form-control" placeholder="Search..." ng-model="search_text" ng-change="getUsers()">
-          <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button" ng-click="getUsers()">Go!</button>
-          </span>
-        </div>
+      <div class="col-sm-3 pull-right">
+          <button ng-click="addUserForm($event)" class="btn btn-dark btn-border btn-rounded-20 btn-own pull-right" ng-show="$root.userInfo.role==1">+ Add user here</button>
       </div>
 
     </div>
@@ -69,11 +30,7 @@
       <table class="table mb-0">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="checkbox checkbox-custom checkbox-custom-sm m-0">
-                <input type="checkbox" ng-model="selectedAll" ng-change="selectAll()"><i></i>
-              </label>
-            </th>
+            <th>No</th>
             <th>UserName</th>
             <th>First Name</th>
             <th>Last Name</th>
@@ -85,7 +42,7 @@
         </thead>
         <tbody>
           <tr ng-repeat="(k, user) in users" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage ">
-            <td><label class="checkbox checkbox-custom checkbox-custom-sm m-0"><input type="checkbox" ng-model="user.selected"><i></i></label></td>
+            <td>{{$index+1}}</td>
             <td>{{user.username}}</td>
             <td>{{user.firstName}}</td>
             <td>{{user.lastName}}</td>

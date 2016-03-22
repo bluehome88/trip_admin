@@ -83,6 +83,7 @@ var app = angular
 
     $http.post( api_url + "checkLogin", {}, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
     .success(function(data, status, headers, config) {
+
       if( data.status=="error" )
           $state.go('core.login');
 
@@ -163,9 +164,9 @@ var app = angular
     })
 
     .state('app.test', {
-      constroller:'customMapCtrl',
+      //constroller:'customMapCtrl',
       url: '/test',
-      templateUrl: 'views/pages/route-map.html',
+      templateUrl: 'views/pages/sales-detail.html',
     })
 
     // reports page
@@ -877,7 +878,7 @@ var app = angular
     .state('core.login', {
       url: '/login',
       controller: 'LoginCtrl',
-      templateUrl: 'views/pages/login.html'
+      templateUrl: 'views/tmpl/pages/login.html'
     })
     //signup
     .state('core.signup', {
@@ -6573,20 +6574,19 @@ app
     $scope.remember_me = false;
     var request_url = api_url + "checkLogin";
     $http.get( request_url, {}).success(function(data, status, headers, config) {
+
         if( data.status == "success" ){
             $state.go('app.dashboard');
             $rootScope.firstName = data.userInfo.firstName;
             $rootScope.userInfo = data.userInfo;
           }
-          else if( data.status=="error" )
-            $state.go('core.login');
-
       });
 
     $scope.login = function() {
 
       $http.post( request_url, {"email": $scope.user.email,"password":$scope.user.password,"remeber_me":$scope.remember_me }, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
         .success(function(data, status, headers, config) {
+console.log( data );
           if( data.status == "success" ){
               $state.go('app.dashboard'); 
               $rootScope.userInfo = data.userInfo;

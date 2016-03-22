@@ -25,7 +25,7 @@
     <div id="pageloader" page-loader></div>
 
 
-    <!--script src='//maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&sensor=false&language=en&v=3.17'></script>
+    <!--script src='//maps.googleapis.com/maps/api/js?libraries=weather,geometry,visualization,places,drawing&sensor=false&language=en&v=3.17'></script-->
 
     <!--[if lt IE 9]>
     <script src="scripts/oldieshim.f2dbeece.js"></script>

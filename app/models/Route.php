@@ -1,12 +1,12 @@
 <?php
 /*
-	Date: 2016-01
+	Date: 2016-03
 	Author: BlueSky
 */
-class News extends CI_Model
+class Route extends CI_Model
 {
 	private $_db = null; 
-	private $table_name = 'news'; 
+	private $table_name = 'routes'; 
 
 	public function __construct(){
 
@@ -14,11 +14,11 @@ class News extends CI_Model
 		
 		$this->_db = $this->load->database('default', TRUE);
 		$this->_db->from( $this->table_name );
-		$this->_db->order_by("date_added", "DESC");
+		$this->_db->order_by("route_date", "DESC");
 	}
 
-	/* get All News*/
-	public function getNews( $where = '' ){
+	/* get All Route*/
+	public function getRoutes( $where = '' ){
 
 		$this->_db->select('*');
 
@@ -37,19 +37,19 @@ class News extends CI_Model
 	}
 
 
-	public function getActiveNews(){
+	public function getActiveRoutes(){
 
-		return $this->getNews( 'status = 1' );
+		return $this->getRoutes( 'active = 1' );
 	}
-	/* get News by newsID*/
-	public function getNewsById( $newsID ){
+	/* get Route by routeID*/
+	public function getRouteById( $routeID ){
 
-		if( !$newsID )
+		if( !$routeID )
 			return false;
 
 		$this->_db->select('*');
 
-		$this->_db->where( "`newsID`=".$newsID );
+		$this->_db->where( "`routeID`=".$routeID );
 	
 		$query = $this->_db->get();
 
@@ -62,31 +62,30 @@ class News extends CI_Model
 		return false;
 	}
 
-	public function addNews( $newsData ){
+	public function addRoute( $routeData ){
 
-		$newsData['date_added'] 	= date("Y-m-d H:i:s");
-		$newsData['date_updated'] 	= date("Y-m-d H:i:s");
+		$routeData['routeDate'] 	= date("Y-m-d");
 
-		return $this->_db->insert( $this->table_name, $newsData );
+		return $this->_db->insert( $this->table_name, $routeData );
 	}
 
-	public function updateNews( $newsData ){
+	public function updateRoute( $routeData ){
 
-		if( !$newsData['newsID'] )
+		if( !$routeData['routeID'] )
 			return false;
 
-		foreach( $newsData as $key => $value )
+		foreach( $routeData as $key => $value )
 			$this->_db->set( $key, $value );
 	
 		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
 
-		$this->_db->where( "newsID", $newsData['newsID'] );
+		$this->_db->where( "routeID", $routeData['routeID'] );
 		return $this->_db->update( $this->table_name );
 	}
 
-	public function deleteNews( $newsID ){
+	public function deleteRoute( $routeID ){
 
-		$this->_db->where("`newsID` = {$newsID}");
+		$this->_db->where("`routeID` = {$routeID}");
 		return $this->_db->delete( $this->table_name );
 	}
 }

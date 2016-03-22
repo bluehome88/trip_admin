@@ -1,38 +1,10 @@
+<div ui-view>
 <div class="page page-tables-bootstrap ng-scope">
 <!-- tile -->
 <section class="tile" fullscreen="isFullscreen07">
 
-  <!-- tile header -->
+  <!-- tile header >
   <div class="tile-header dvd dvd-btm">
-    <h1 class="custom-font"><strong>Advanced</strong> Table</h1>
-    <ul class="controls">
-      <li class="dropdown" uib-dropdown on-toggle="toggled(open)">
-
-        <a href uib-dropdown-toggle class="dropdown-toggle settings"><i class="fa fa-cog"></i></a>
-
-        <ul class="dropdown-menu pull-right with-arrow animated littleFadeInUp">
-          <li>
-            <a href tile-control-toggle>
-              <span class="minimize"><fa name="angle-down"></fa>&nbsp;&nbsp;&nbsp;Minimize</span>
-              <span class="expand"><fa name="angle-up"></fa>&nbsp;&nbsp;&nbsp;Expand</span>
-            </a>
-          </li>
-          <li>
-            <a href ng-click="getOrders()">
-              <fa name="refresh"></fa> Refresh
-            </a>
-          </li>
-          <li>
-            <a href tile-control-fullscreen ng-click="isFullscreen07 = !isFullscreen07">
-              <fa name="expand"></fa> Fullscreen
-            </a>
-          </li>
-
-        </ul>
-
-      </li>
-      <li class="remove"><a href tile-control-close><i class="fa fa-times"></i></a></li>
-    </ul>
   </div>
   <!-- /tile header -->
 
@@ -51,7 +23,7 @@
         <div class="input-group">
           <input type="text" class="input-sm form-control" placeholder="Search...">
           <span class="input-group-btn">
-            <button class="btn btn-sm btn-default" type="button">Go!</button>
+            <button class="btn btn-sm btn-default" type="button">Search</button>
           </span>
         </div>
       </div>
@@ -68,43 +40,39 @@
       <table class="table mb-0">
         <thead>
           <tr>
-            <th style="width:20px;">
-              <label class="checkbox checkbox-custom checkbox-custom-sm m-0">
-                <input type="checkbox" ng-model="selectedAll" ng-change="selectAll()"><i></i>
-              </label>
-            </th>
+            <th>No</th>
+            <th>Store Name</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Order Date</th>
             <th>Order Qty</th>
-            <th>Store Name</th>
             <th style="width:15%;"></th>
           </tr>
         </thead>
         <tbody>
           <tr ng-repeat="order in orders" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
-            <td><label class="checkbox checkbox-custom checkbox-custom-sm m-0"><input type="checkbox" ng-model="order.selected"><i></i></label></td>
+            <td>{{$index + 1}}</td>
+            <td>{{order.storeName}}</td>
             <td>{{order.firstName}}</td>
             <td>{{order.lastName}}</td>
-            <td>{{order.orderDate}}</td>
+            <td>{{order.orderDate | date:'dd MMM yyyy'}}</td>
             <td class="blue-cell">{{order.orderQty}}</td>
-            <td>{{order.storeName}}</td>
             <td>
-              <span class="text-success">View order items</span>
+              <span class="text-success" ui-sref="app.sales.detail({orderID: order.orderID})">View order items</span>
             </td>
           </tr>
+          <tr ng-hide="orders.length">
+            <td colspan = 7 align="center"> There is no result!</td>
+          </tr>    
         </tbody>
       </table>
     </div>
-
-
   </div>
   <!-- /tile body -->
 
-
   <!-- tile footer -->
-  <div class="tile-footer dvd dvd-top">
-    <div class="row"  ng-show="orders.length">
+  <div class="tile-footer dvd dvd-top" ng-show="">
+    <div class="row" ng-show="orders.length > perpage">
 
       <div class="col-sm-5 hidden-xs">
       </div>
@@ -126,4 +94,5 @@
 
 </section>
 <!-- /tile -->
+</div>
 </div>

@@ -43,7 +43,7 @@ app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
     }
 
     $scope.showRoleLang = function( role ){
-        userRole = ["Super Admin", "Branch Browser", "User"];
+        userRole = ["Super Admin", "Branch Manager", "Sales"];
         return userRole[role-1];
     }
 
@@ -388,6 +388,40 @@ app.controller('RouteDetailCtrl', function( $scope, $mdDialog, $http ){
     }
 });
 
+app.controller('SalesDetailCtrl', function( $scope, $http, $stateParams ){
+
+    orderID = $stateParams.orderID;
+    $scope.order = [];
+
+    $scope.perpage  = num_per_page;
+    $scope.currentPage = 1;
+    max_page = 1;
+    
+    $scope.setpage = function( pagenum ){
+
+      if( pagenum < 1)
+        $scope.currentPage = 1;
+      else if( pagenum > max_page)
+        $scope.currentPage = max_page;
+      else
+        $scope.currentPage = pagenum;
+
+      $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.order.product_info.length );
+    } 
+    
+    $scope.getOrderInfo = function(){
+      $http.post( api_url + "getOrderDetails", { "orderID": orderID }, {headers: {'Content-Type': 'application/json'} })
+        .success(function(data, status, headers, config) {
+          $scope.order = data;
+          $scope.currentPage = 1;
+          max_page = Math.ceil( $scope.order.product_info.length / $scope.perpage );
+          $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.order.product_info.length );
+        });
+    }
+
+    $scope.getOrderInfo();
+});
+
 app.controller('SalesCtrl', function( $scope, $http ){
 
     $scope.orders   = [];
@@ -410,11 +444,11 @@ app.controller('SalesCtrl', function( $scope, $http ){
     $scope.getOrders = function(){
 
       var dataObj = {
-        //search_text : $scope.search_text
       };  
+
       $scope.orders = [];
 
-      $http.post( api_url+"getOrders", dataObj, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
+      $http.post( api_url + "getOrders", dataObj, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
         if( data != "false" )
         {
           $scope.orders = data;
@@ -431,16 +465,8 @@ app.controller('SalesCtrl', function( $scope, $http ){
 app.controller('RouteCtrl', function( $scope, $http, $timeout ){
 
     $scope.loadAreaInfo = function() {
-      // Use timeout to simulate a 650ms request.
-      $scope.arealist = [];
       return $timeout(function() {
-        $scope.arealist = [
-          { id: 1, name: 'Scooby Doo' },
-          { id: 2, name: 'Shaggy Rodgers' },
-          { id: 3, name: 'Fred Jones' },
-          { id: 4, name: 'Daphne Blake' },
-          { id: 5, name: 'Velma Dinkley' },
-        ];
+        $scope.arealist = $scope.arealist;
       }, 650);
     };
 });
@@ -520,9 +546,6 @@ app.controller('customMapCtrl', function($scope) {
         },
       ]
     };
-    /*$scope.map.circles = [];
-    $scope.map.circles.push( {id: 1,center: {latitude:51.219053,longitude:4.40441}} );
-    $scope.map.circles.push( {id: 2,center: {latitude:51.218053,longitude:4.40541}} );*/
 
     $scope.options = {scrollwheel: false};
   });
@@ -555,6 +578,8 @@ app.controller('ReportCtrl', function($scope, $http ) {
       res.success(function(data, status, headers, config) {
         if( data != "false" )
         {
+console.log( "getReports" );  
+console.log( data);  
           $scope.reports = data;
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.reports.length / $scope.perpage );
@@ -564,6 +589,9 @@ app.controller('ReportCtrl', function($scope, $http ) {
     }
 
     $scope.getReports();
+});
+
+app.controller('ReportDetailCtrl', function($scope, $http ) {
 });
 
 app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams ) {
@@ -586,6 +614,7 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
     } 
 
     userID = $stateParams.userID;
+
     $scope.user = {};
     $http.post( api_url + "getUserById", { "userID": userID }, {headers: {'Content-Type': 'application/json'} })
       .success(function(data, status, headers, config) {
@@ -593,9 +622,9 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
           $scope.user = data;
       });
 
-    $scope.getPersonCompleteReports = function(){
+    $scope.getPersonCompleteReports = function( ){
 
-      var dataObj = {};  
+      var dataObj = {"userID": userID};  
       $scope.person_reports = [];
 
       var res = $http.post( api_url + "getPersonCompleteReports", dataObj, {headers: {'Content-Type': 'application/json'} });

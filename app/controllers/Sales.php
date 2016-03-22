@@ -12,6 +12,10 @@ class Sales extends CI_Controller {
 		parent::__construct();
 	}
 
+	public function index(){
+
+	}
+	
 	public function getOrders(){
 
 		$arrOrders = array( array( "firstName"=> "Jennifer", "lastName"=>"Minely", "orderDate"=>"23 Nov 2015","orderQty"=>15,"storeName"=>"Store A,B" ),

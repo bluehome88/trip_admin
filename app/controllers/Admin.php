@@ -29,7 +29,7 @@ class Admin extends CI_Controller {
 
 		$this->load->helper('cookie');
 		$this->load->helper('url');
-		$this->load->model('user');
+		$this->load->model('User');
 		$this->load->library('session');
 	}
 

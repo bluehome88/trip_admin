@@ -62,6 +62,27 @@ class Route extends CI_Model
 		return false;
 	}
 
+	/* get Route by routeID*/
+	public function getRouteByUserId( $userID ){
+
+		if( !$userID )
+			return false;
+
+		$this->_db->select('*');
+
+		$this->_db->where( "`userID`=".$userID );
+	
+		$query = $this->_db->get();
+
+		if($query->num_rows() > 0)
+		{
+			$rows = $query->result();
+			return $rows[0];
+		}
+
+		return false;
+	}
+
 	public function addRoute( $routeData ){
 
 		$routeData['routeDate'] 	= date("Y-m-d");

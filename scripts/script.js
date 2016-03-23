@@ -467,8 +467,12 @@ app.controller('RouteCtrl', function( $scope, $http, $timeout ){
     $scope.loadAreaInfo = function() {
       return $timeout(function() {
         $scope.arealist = $scope.arealist;
-      }, 650);
+      }, 550);
     };
+
+    $scope.changeSales = function(){
+      //alert();
+    }
 });
 
 app.controller('customMapCtrl', function($scope) {

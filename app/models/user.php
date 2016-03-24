@@ -2,13 +2,13 @@
 
 class User extends CI_Model
 {
-	private $_db = null; 
-	private $table_name = 'users'; 
+	private $_db = null;
+	private $table_name = 'users';
 
 	public function __construct(){
 
 		parent::__construct();
-		
+
 		$this->_db = $this->load->database('default', TRUE);
 		$this->_db->from( $this->table_name );
 		$this->_db->order_by("firstName", "ASC");
@@ -21,13 +21,13 @@ class User extends CI_Model
 
 		if( $where != '' )
 			$this->_db->where( $where );
-	
+
 		$query = $this->_db->get();
-	
+
 		if($query->num_rows() > 0)
 		{
 			$rows = $query->result();
-			return $rows;			
+			return $rows;
 		}
 
 		return false;
@@ -40,11 +40,9 @@ class User extends CI_Model
 			return false;
 
 		$this->_db->select('*');
-
 		$this->_db->where( "`userID`=".$userID );
-	
 		$query = $this->_db->get();
-	
+
 		if($query->num_rows() > 0)
 		{
 			$rows = $query->result();
@@ -75,8 +73,8 @@ class User extends CI_Model
 			$this->_db->set( $key, $value );
 
 		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
-
 		$this->_db->where( "userID", $userData['userID'] );
+
 		return $this->_db->update( $this->table_name );
 	}
 

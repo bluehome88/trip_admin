@@ -10,14 +10,15 @@ class Api extends CI_Controller {
 	public function __construct(){
 
 		parent::__construct();
-		
+
 		$this->load->helper('cookie');
 		$this->load->helper('url');
-		
+
 		// load models
 		$this->load->model('User');
 		$this->load->model('News');
 		$this->load->model('relations');
+		$this->load->model('route');
 
 		$this->load->library('session');
 		date_default_timezone_set('America/Chicago');
@@ -35,7 +36,7 @@ class Api extends CI_Controller {
 		else
 			return '';
 	}
-	
+
 	// ------- start User block -------//
 	public function checkLogin(){
 
@@ -73,15 +74,15 @@ class Api extends CI_Controller {
 				echo json_encode( $arrReturn );
 			}
 			else if(isset($res->role))
-				echo json_encode(array("status"=>"error", "error_message"=>"Your account isn't Admin")); 
+				echo json_encode(array("status"=>"error", "error_message"=>"Your account isn't Admin"));
 			else
-				echo json_encode(array("status"=>"error", "error_message"=>"Invalid Email or Password!")); 
+				echo json_encode(array("status"=>"error", "error_message"=>"Invalid Email or Password!"));
 		}
 		return;
 	}
 
 	public function getAllUsers(){
-		
+
 		$search = $this->getValue('search_text');
 		$user = new User();
 		$arrUsers = $user->getUsers( "`firstName` LIKE '%".$search."%' OR `lastName` LIKE '%".$search."%' OR `username` LIKE '%".$search."%' OR `email` LIKE '%".$search."%' " );
@@ -145,7 +146,6 @@ class Api extends CI_Controller {
 		$arrUsers = $user->getUsers( "`username`='".$email."'" );
 		echo json_encode( $arrUsers );
 	}
-
 	// ------- end User block ------- //
 
 	// ------- start News block -------//
@@ -170,16 +170,16 @@ class Api extends CI_Controller {
 	}
 
 	public function getNewsList(){
-		
+
 		$news = new News();
 		$arrNews = $news->getNews( );
 		echo json_encode( $arrNews );
 	}
-	
+
 	public function getNewsById(){
 
 		$newsID = $this->getValue('newsID');
-	
+
 		$news = new News();
 		echo json_encode( $news->getNewsById( $newsID ));
 	}
@@ -197,9 +197,9 @@ class Api extends CI_Controller {
 
 		/*
 			$arrOrder Row Data fields
-			array( 	"orderID"=>1, 
-					"firstName"=> "Jennifer", 
-					"lastName"=>"Minely", 
+			array( 	"orderID"=>1,
+					"firstName"=> "Jennifer",
+					"lastName"=>"Minely",
 					"orderDate"=>"23 Nov 2015",
 					"orderQty"=>15,
 					"storeName"=>"Store A,B" )
@@ -211,7 +211,7 @@ class Api extends CI_Controller {
 	}
 
 	public function getOrderDetails(){
-		
+
 		if( !$this->getValue("orderID") ){
 			echo "error";
 			die;
@@ -220,14 +220,14 @@ class Api extends CI_Controller {
 		$arrOrderInfo 	= $this->relations->getOrders("orderID=".$this->getValue("orderID"));
 		$arrProducts 	= $this->relations->getOrderDetailInfo(1);
 
-		$arrReturn = array(	
-								"store_name" 	=> $arrOrderInfo[0]->storeName, 
+		$arrReturn = array(
+								"store_name" 	=> $arrOrderInfo[0]->storeName,
 								"person_name" 	=> $arrOrderInfo[0]->firstName." ".$arrOrderInfo[0]->lastName,
 								"order_date" 	=> $arrOrderInfo[0]->orderDate,
 								"product_info" 	=> $arrProducts
-														
+
 							);
-		
+
 		echo json_encode( $arrReturn );
 	}
 	// ------- end Orders block ------- //
@@ -239,20 +239,20 @@ class Api extends CI_Controller {
 
 	public function getReports(){
 
-		$arrUsers = $this->user->getUsers();
-		$arrReturn = array(); 
+		$arrUsers = $this->User->getUsers();
+		$arrReturn = array();
 
 		/*foreach( $arrUsers as $k => $val){
 			$arrReturn[$k] = $val;
 			$arrReturn[$k]->completion = $this->calcCompletionRate( $val->userID );
 		}*/
 		/*
-		Row Data Fields 
-		array( 
-			"userID"=>"2", 
-			"firstName"=> "Mark", 
-			"lastName"=>"Otto", 
-			"areaInfo"=>"District 4", 
+		Row Data Fields
+		array(
+			"userID"=>"2",
+			"firstName"=> "Mark",
+			"lastName"=>"Otto",
+			"areaInfo"=>"District 4",
 			"completion"=>"80" ),
 
 		);*/
@@ -325,16 +325,15 @@ class Api extends CI_Controller {
 		echo json_encode( $arrAreaList );
 	}
 
-	public function getWeeklyRoutes(){
+	public function getRoutes(){
 
-	}
+		$userID = $this->getValue('userID');
+		$where = '';
+		if( $userID != "" && $userID != 0 )
+				$where = "routes.userID=".$userID;
 
-	public function getBiweeklyRoutes(){
-
-	}
-
-	public function getRouteDetails(){
-
+		$arrRoutes = $this->route->getAllRoutes( $where );
+		echo json_encode( $arrRoutes );
 	}
 
 	// -- end of Route -- //

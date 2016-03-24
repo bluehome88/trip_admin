@@ -3,7 +3,7 @@
 	<section class="tile" fullscreen="isFullscreen07">
 
 	  <!-- tile header -->
-	  
+
 	  <!-- /tile header -->
 
 	  <!-- tile widget -->
@@ -34,8 +34,8 @@
 	          </tr>
 	        </thead>
 	        <tbody>
-	          <tr ng-repeat="report in reports" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
-            	<td>{{$index + 1}}</td>
+	          <tr ng-repeat="report in reports track by reportIndex" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
+            	<td>{{reportIndex + 1}}</td>
 	            <td>{{report.firstName}}</td>
 	            <td>{{report.lastName}}</td>
 	            <td class="blue-cell">{{report.completion}}%</td>
@@ -45,7 +45,7 @@
 	          </tr>
 	          <tr ng-hide="reports.length">
 	            <td colspan = 7 align="center"> There is no result!</td>
-	          </tr>          
+	          </tr>
 	        </tbody>
 	      </table>
 	    </div>

@@ -91,9 +91,9 @@ var app = angular
       // check User Access Permission
       if( toState.controller == "NewsCtrl" && $rootScope.userInfo.role == 2 )
           $state.go('app.sales');
-        
-    }); 
-    
+
+    });
+
       event.targetScope.$watch('$viewContentLoaded', function () {
 
         angular.element('html, body, #content').animate({ scrollTop: 0 }, 200);
@@ -156,10 +156,17 @@ var app = angular
       templateUrl: 'views/pages/route.html'
     })
     //route/detail
-    .state('app.route.detail', {
-      url: '/detail',
-      controller: 'RouteDetailCtrl',
-      templateUrl: 'views/pages/route-detail.html'
+    .state('app.route.upload', {
+      url: '/upload',
+      controller: 'RouteUploadCtrl',
+      templateUrl: 'views/pages/route-upload.html',
+      resolve: {
+        plugins: ['$ocLazyLoad', function($ocLazyLoad) {
+          return $ocLazyLoad.load([
+            'scripts/vendor/filestyle/bootstrap-filestyle.min.js'
+          ]);
+        }]
+      },
     })
 
     .state('app.test', {
@@ -257,7 +264,7 @@ var app = angular
       url: '/add',
       controller: 'MailSingleCtrl',
       templateUrl: 'views/tmpl/mail/single.html'
-    })   
+    })
     //ui
     .state('app.ui', {
       url: '/ui',
@@ -1009,14 +1016,6 @@ app
       }
     };
 
-    $scope.arealist = [];
-    $http.post( api_url+"getAreaList", {}, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
-      if( data != "false" )
-      {
-        $scope.arealist = data;
-      }
-    });
-
     $scope.ajaxFaker = function(){
       $scope.data=[];
       var url = 'http://www.filltext.com/?rows=10&fname={firstName}&lname={lastName}&delay=5&callback=JSON_CALLBACK';
@@ -1247,7 +1246,7 @@ app
  */
 app
   .controller('DashboardCtrl', function($scope,$http){
-    
+
     $scope.page = {
       title: 'Dashboard',
       subtitle: 'Place subtitle here...'
@@ -1263,7 +1262,7 @@ app
     };
 
     $scope.getUsers();
-*/    
+*/
   })
 
   .controller('StatisticsChartCtrl', function ($scope) {
@@ -2273,7 +2272,7 @@ angular.module('lazyModel', [])
         var compiled = $compile(elem);
         return {
           pre: function(scope) {
-            // compile element with ng-model directive poining to `scope.buffer`   
+            // compile element with ng-model directive poining to `scope.buffer`
             compiled(scope);
           },
           post: function postLink(scope, elem, attr, ctrls) {
@@ -6589,7 +6588,7 @@ app
       $http.post( request_url, {"email": $scope.user.email,"password":$scope.user.password,"remeber_me":$scope.remember_me }, {headers: {'Content-Type': 'application/x-www-form-urlencoded'} })
         .success(function(data, status, headers, config) {
           if( data.status == "success" ){
-              $state.go('app.dashboard'); 
+              $state.go('app.dashboard');
               $rootScope.userInfo = data.userInfo;
           }
           else
@@ -9286,4 +9285,3 @@ app
     };
 
   });
-

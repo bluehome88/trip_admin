@@ -20,14 +20,14 @@ app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
         $scope.currentPage = pagenum;
 
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.users.length );
-    } 
+    }
 
     $scope.getUsers = function(){
 
       var dataObj = {
         search_text : $scope.search_text
-      };  
-      
+      };
+
       $scope.users = [];
 
       var res = $http.post( api_url + "getAllUsers", dataObj, {headers: {'Content-Type': 'application/json'} });
@@ -97,7 +97,7 @@ app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
           return;
         var dataObj = {
           "userID": userID
-        };  
+        };
 
         var res = $http.post( api_url + "deleteUser", dataObj, {headers: {'Content-Type': 'application/json'} });
         res.success(function(data, status, headers, config) {
@@ -126,10 +126,10 @@ app.controller('UserFormCtrl', function( $scope, $mdDialog, $http, user ){
         email     : $scope.user.email,
         password  : $scope.user.password,
         role      : $scope.user.role
-      };  
-    
+      };
+
       var res = $http.post( api_url + "saveUser", dataObj, {headers: {'Content-Type': 'application/json'} });
-      res.success(function(data, status, headers, config) {        
+      res.success(function(data, status, headers, config) {
         if( data )
             $mdDialog.hide();
       });
@@ -176,13 +176,13 @@ app.controller('LightBoxCtrl', function( $scope, $mdDialog, $http ){
 });
 
 app.controller('NewsCtrl', function( $scope, $http, $state, $mdDialog, $stateParams, $timeout ){
-    
+
     $scope.page = {
       title: 'Masonry',
       subtitle: 'Place subtitle here...'
     };
     $scope.newslist = {};
-    
+
     $scope.getNews = function(){
       $scope.newslist = {};
       var request_url = api_url + "getNewsList";
@@ -199,7 +199,7 @@ app.controller('NewsCtrl', function( $scope, $http, $state, $mdDialog, $statePar
 
         var dataObj = {
             "newsID": newsID
-        };  
+        };
 
         var res = $http.post( api_url + "deleteNews", dataObj, {headers: {'Content-Type': 'application/json'} });
         res.success(function(data, status, headers, config) {
@@ -219,23 +219,23 @@ app.controller('NewsAddCtrl', function( $scope, $http, $state, $mdDialog, $state
         $http.post( api_url + "getNewsById", { "newsID": newsID }, {headers: {'Content-Type': 'application/json'} })
           .success(function(data, status, headers, config) {
             $scope.img_url = upload_url + "img/";
-            $scope.news = data;         
+            $scope.news = data;
           });
     }
 
     $scope.saveNews = function(){
-      
+
       var dataObj = {
         newsID      : $scope.news.newsID,
         newsTitle   : $scope.news.newsTitle,
         imgPath     : $scope.news.imgPath,
         newsContent : $scope.news.newsContent
-      };  
+      };
 
       var res = $http.post( api_url + "saveNews", dataObj, {headers: {'Content-Type': 'application/json'} });
       res.success( function(data, status, headers, config ){
           $scope.getNews();
-          $state.go('app.news');  
+          $state.go('app.news');
       });
     };
 
@@ -342,8 +342,8 @@ app.controller('FileUploadCtrl', ['$scope', 'FileUploader','$mdDialog', function
 
 
 
-app.controller('RouteDetailCtrl', function( $scope, $mdDialog, $http ){
-    
+app.controller('RouteUploadCtrl', function( $scope, $mdDialog, $http ){
+
     $scope.showAddStoreDialog = function(ev, storeID) {
 
       $mdDialog.show({
@@ -359,7 +359,7 @@ app.controller('RouteDetailCtrl', function( $scope, $mdDialog, $http ){
     };
 
     $scope.showMapDialog = function(ev) {
-      
+
       $mdDialog.show({
         controller: 'LightBoxCtrl',
         templateUrl: 'views/pages/route-map.html',
@@ -379,7 +379,7 @@ app.controller('RouteDetailCtrl', function( $scope, $mdDialog, $http ){
 
         var dataObj = {
           "storeID": storeID
-        };  
+        };
 
         $http.post( api_url + "deleteStore", dataObj, {headers: {'Content-Type': 'application/json'} })
         .success(function(data, status, headers, config) {
@@ -396,7 +396,7 @@ app.controller('SalesDetailCtrl', function( $scope, $http, $stateParams ){
     $scope.perpage  = num_per_page;
     $scope.currentPage = 1;
     max_page = 1;
-    
+
     $scope.setpage = function( pagenum ){
 
       if( pagenum < 1)
@@ -407,8 +407,8 @@ app.controller('SalesDetailCtrl', function( $scope, $http, $stateParams ){
         $scope.currentPage = pagenum;
 
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.order.product_info.length );
-    } 
-    
+    }
+
     $scope.getOrderInfo = function(){
       $http.post( api_url + "getOrderDetails", { "orderID": orderID }, {headers: {'Content-Type': 'application/json'} })
         .success(function(data, status, headers, config) {
@@ -439,12 +439,12 @@ app.controller('SalesCtrl', function( $scope, $http ){
         $scope.currentPage = pagenum;
 
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.orders.length );
-    } 
+    }
 
     $scope.getOrders = function(){
 
       var dataObj = {
-      };  
+      };
 
       $scope.orders = [];
 
@@ -458,21 +458,69 @@ app.controller('SalesCtrl', function( $scope, $http ){
         }
       });
     }
-    
+
     $scope.getOrders();
 });
 
-app.controller('RouteCtrl', function( $scope, $http, $timeout ){
+app.controller('RouteCtrl', function( $scope, $http, $timeout, $mdDialog ){
 
-    $scope.loadAreaInfo = function() {
-      return $timeout(function() {
-        $scope.arealist = $scope.arealist;
-      }, 550);
-    };
+    $scope.users = [];
+    $scope.routes = [];
+    $scope.perpage  = num_per_page;
+    $scope.currentPage = 1;
+    max_page = 1;
 
-    $scope.changeSales = function(){
-      //alert();
+    $scope.setpage = function( pagenum ){
+
+      if( pagenum < 1)
+        $scope.currentPage = 1;
+      else if( pagenum > max_page)
+        $scope.currentPage = max_page;
+      else
+        $scope.currentPage = pagenum;
+
+      $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.routes.length );
     }
+
+    var res = $http.post( api_url + "getAllUsers", {}, {headers: {'Content-Type': 'application/json'} });
+    res.success(function(data, status, headers, config) {
+      if( data != "false" )
+      {
+        $scope.users = data;
+      }
+    });
+
+    $scope.getRoutes = function( selectedUser='' ){
+      $scope.routes = [];
+      var dataObj = {
+          userID : selectedUser
+      };
+      var res = $http.post( api_url + "getRoutes", dataObj, {headers: {'Content-Type': 'application/json'} });
+      res.success(function(data, status, headers, config) {
+        if( data != "false" )
+        {
+          $scope.routes = data;
+        }
+      });
+    }
+    $scope.changeSales = function(){
+        this.getRoutes( this.salesUser );
+    }
+
+    $scope.showMapDialog = function(ev) {
+
+      $mdDialog.show({
+        controller: 'LightBoxCtrl',
+        templateUrl: 'views/pages/route-map.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:true
+      })
+      .then(function(answer) {
+        //$scope.getUsers();
+      });
+    };
+    $scope.getRoutes();
 });
 
 app.controller('customMapCtrl', function($scope) {
@@ -571,19 +619,17 @@ app.controller('ReportCtrl', function($scope, $http ) {
         $scope.currentPage = pagenum;
 
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.reports.length );
-    } 
+    }
 
     $scope.getReports = function(){
 
-      var dataObj = {};  
+      var dataObj = {};
       $scope.reports = [];
 
       var res = $http.post( api_url + "getReports", dataObj, {headers: {'Content-Type': 'application/json'} });
       res.success(function(data, status, headers, config) {
         if( data != "false" )
         {
-console.log( "getReports" );  
-console.log( data);  
           $scope.reports = data;
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.reports.length / $scope.perpage );
@@ -615,7 +661,7 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
         $scope.currentPage = pagenum;
 
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.person_reports.length );
-    } 
+    }
 
     userID = $stateParams.userID;
 
@@ -628,7 +674,7 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
 
     $scope.getPersonCompleteReports = function( ){
 
-      var dataObj = {"userID": userID};  
+      var dataObj = {"userID": userID};
       $scope.person_reports = [];
 
       var res = $http.post( api_url + "getPersonCompleteReports", dataObj, {headers: {'Content-Type': 'application/json'} });

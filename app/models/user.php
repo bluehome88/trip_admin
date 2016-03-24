@@ -29,7 +29,6 @@ class User extends CI_Model
 			$rows = $query->result();
 			return $rows;
 		}
-
 		return false;
 	}
 

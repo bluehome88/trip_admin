@@ -14,7 +14,7 @@
     <div class="row">
 
       <div class="col-sm-5">
-          <h2 class="page_title">Sales Report</h2>
+          <h2 class="page_title">Comments for <span style="color:#5bc0de;">{{topicInfo.topicTitle}}</span></h2>
       </div>
 
       <div class="col-sm-3"></div>
@@ -41,27 +41,21 @@
         <thead>
           <tr>
             <th>No</th>
-            <th>Store Name</th>
-            <th>First Name</th>
-            <th>Last Name</th>
-            <th>Order Date</th>
-            <th>Order Qty</th>
-            <th style="width:15%;"></th>
+            <th>User Name</th>
+            <th>Sales Code</th>
+            <th>Comment</th>
+            <th>Date</th>
           </tr>
         </thead>
         <tbody>
-          <tr ng-repeat="order in orders" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
+          <tr ng-repeat="comment in comments" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
             <td>{{$index + 1}}</td>
-            <td>{{order.storeName}}</td>
-            <td>{{order.firstName}}</td>
-            <td>{{order.lastName}}</td>
-            <td>{{order.orderDate | date:'dd MMM yyyy'}}</td>
-            <td class="blue-cell">{{order.orderQty}}</td>
-            <td>
-              <span class="text-success" ui-sref="app.sales.detail({orderID: order.orderID})">View order items</span>
-            </td>
+            <td>{{comment.firstName}}</td>
+            <td>{{comment.salesCode}}</td>
+            <td>{{comment.contents}}</td>
+            <td>{{comment.date_added}}</td>
           </tr>
-          <tr ng-hide="orders.length">
+          <tr ng-hide="comments.length">
             <td colspan = 7 align="center"> There is no result!</td>
           </tr>
         </tbody>
@@ -72,20 +66,20 @@
 
   <!-- tile footer -->
   <div class="tile-footer dvd dvd-top" ng-show="">
-    <div class="row" ng-show="orders.length > perpage">
+    <div class="row" ng-show="comments.length > perpage">
 
       <div class="col-sm-5 hidden-xs">
       </div>
 
       <div class="col-sm-3 text-center">
-        <small class="text-muted">showing {{(currentPage-1) * perpage + 1 }} - {{to_limit}} of {{orders.length}} items</small>
+        <small class="text-muted">showing {{(currentPage-1) * perpage + 1 }} - {{to_limit}} of {{comments.length}} items</small>
       </div>
 
       <div class="col-sm-4 text-right">
         <ul class="pagination pagination-sm m-0">
           <li><a href ng-class="{'disable': currentPage == 1}" ng-click="setpage(currentPage-1)"><i class="fa fa-chevron-left"></i></a></li>
-          <li class="page_number" ng-repeat="order in orders" ng-if="page=($index/perpage)+1; ($index % perpage)==0"><a href ng-class="{'active': page==currentPage}" ng-click="setpage(page)">{{page}}</a></li>
-          <li><a href ng-class="{'disable': currentPage>=orders.length/perpage && currentPage < orders.length/perpage +1}" ng-click="setpage(currentPage+1)"><i class="fa fa-chevron-right"></i></a></li>
+          <li class="page_number" ng-repeat="comment in comments" ng-if="page=($index/perpage)+1; ($index % perpage)==0"><a href ng-class="{'active': page==currentPage}" ng-click="setpage(page)">{{page}}</a></li>
+          <li><a href ng-class="{'disable': currentPage>=comments.length/perpage && currentPage < comments.length/perpage +1}" ng-click="setpage(currentPage+1)"><i class="fa fa-chevron-right"></i></a></li>
         </ul>
       </div>
     </div>

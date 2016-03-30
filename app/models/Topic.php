@@ -24,6 +24,7 @@ class Topic extends CI_Model
 
 		if( $where != '' )
 			$this->_db->where( $where );
+		$this->_db->join('stores', 'stores.storeID='.$this->table_name.'.storeID');
 	
 		$query = $this->_db->get();
 	

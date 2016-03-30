@@ -1,35 +1,43 @@
 <div ui-view>
-	<div class="page page-tables-bootstrap ng-scope page-upload " nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
+	<div class="page page-tables-bootstrap ng-scope">
 
 	<!-- tile -->
 	<section class="tile" fullscreen="isFullscreen07">
   <!-- tile widget -->
-	  <div class="tile-widget">
+	  	<div class="tile-widget">
 			<div class="row">
-	      <div class="col-sm-5">
-	          <h2 class="page_title">Routes</h2>
-	      </div>
-	    </div>
-	  </div>
+	      		<div class="col-sm-5">
+	          		<h2 class="page_title">Upload Routes</h2>
+	      		</div>
+	    	</div>
+	  	</div>
+
 		<div class="row p-15">
-			<div class="col-sm-12" ng-show="$root.userInfo.role!=3">
-				<div class="col-sm-8">
-		        <div class="form-group">
-		          <input ui-jq="filestyle" type="file" class="filestyle" ui-options="{
-		            buttonText: 'Select file',
-		            iconName: 'fa fa-inbox'
-		          }" nv-file-select="" uploader="uploader">
-		        </div>
-		        <div ng-show="error_message" style="color:red; font-size:12px;">({{error_message}})</div>
-          	<input type="hidden" name="imgPath" id="imgPath" class="form-control" ng-model="news.imgPath">
-        </div>
-				<div class="col-sm-3">
-					<button ng-click="uploadRoute()" class="btn btn-dark btn-border btn-rounded-20 btn-own">Upload CSV</button>
-				</div>
+			<div class="col-sm-12">
+				Data fields: salesCode( userCode ), customerCode( storeCode ), RouteDate( type: 2016-03-23 ) 
 			</div>
-      <div class="col-sm-3" ng-if="">
-        Upload Successful!
-      </div>
+		</div>
+
+		<div class="row p-15">
+			<div class="col-sm-7" ng-show="$root.userInfo.role!=3">
+				<form action="" method="POST" enctype="multipart/form-data">	
+				<div class="col-sm-8">
+			        <div class="form-group">
+			          <input ui-jq="filestyle" type="file" class="filestyle" ui-options="{
+			            buttonText: 'Select file',
+			            iconName: 'fa fa-inbox'
+			          }" fileModel="myFile" name="route_file" id="route_file">
+			        </div>
+			        <div style="color:red; font-size:12px;" id="route_error_message"></div>
+		        </div>
+				<div class="col-sm-3">
+					<a ng-click="uploadFile()" class="btn btn-dark btn-border btn-rounded-20 btn-own">Upload CSV</a>
+				</div>
+				</form>
+			</div>
+		</div>
+		<div class="row p-15">
+			<div class="col-sm-12" id="route_success_message"></div>
 		</div>
 	  <!-- /tile widget -->
 

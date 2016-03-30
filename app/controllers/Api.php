@@ -19,6 +19,8 @@ class Api extends CI_Controller {
 		$this->load->model('News');
 		$this->load->model('relations');
 		$this->load->model('route');
+		$this->load->model('topic');
+		$this->load->model('comment');
 
 		$this->load->library('session');
 		date_default_timezone_set('America/Chicago');
@@ -337,4 +339,97 @@ class Api extends CI_Controller {
 	}
 
 	// -- end of Route -- //
+	public function uploadRoute(){
+
+		if( $_FILES['file']['type'] != "text/csv" ){
+
+		    $answer = array( 'answer' => 'error', 'message'=> 'Upload Correct File. File type is CSV' );
+		    echo json_encode($answer);
+		    exit;
+		}
+
+		$file_name = date("Y-m-d").$_FILES[ 'file' ][ 'name' ];
+	    $tempPath = $_FILES[ 'file' ][ 'tmp_name' ];
+	    $uploadPath = dirname( __FILE__ ) . DIRECTORY_SEPARATOR . '../../uploads/route' . DIRECTORY_SEPARATOR . $file_name;
+
+	    move_uploaded_file( $tempPath, $uploadPath );
+		
+
+	    $answer = array( 'answer' => 'success', 'message' => $this->importDataFromCSV( $uploadPath ) );
+
+	    echo json_encode($answer);
+	    exit;
+	}
+
+	public function importDataFromCSV( $filePath = '' ){
+// static
+$filePath = "/Volumes/MDATA/triputra/app/controllers/../../uploads/route/2016-03-302016-03-30clinics.csv";
+		// read file content
+        $arrRoutes = array();
+        $arrKeys = array();
+
+        $fp = fopen($filePath, 'rb');
+        $index = -1;
+        while (is_resource($fp) && !feof($fp)) {
+            $row = fgets($fp, 16384);
+            $arrTemp = explode( "," , $row );
+            // set key
+            if( empty($arrKeys)){
+                foreach ( $arrTemp  as $key => $value) 
+                    $arrKeys[] = trim( $value );
+            }
+            else{
+                if( sizeof($arrTemp) != sizeof($arrKeys) )
+                    continue;
+                foreach ( $arrTemp  as $key => $value) {
+                    //if( $$arrKeys[$key] != "" )
+                        $arrRoutes[$index][$arrKeys[$key]] = $value;
+                }
+            }
+            $index++;
+        }
+echo "<pre>";        
+print_r( $arrRoutes);
+echo "</pre>";
+
+		foreach($arrRoutes as $key => $value){
+			
+			$data = array( 
+					"" => "", 
+
+				);
+
+			$this->route->addRoute( $data);
+		}
+		return $filePath;
+	}
+
+	public function getTopics(){
+
+		$arrTopics = array();
+		$arrTopics = $this->topic->getTopics();
+
+		echo json_encode( $arrTopics );
+	}
+
+	public function getTopicByID(){
+
+		$topicID = $this->getValue('topicID');
+
+		$arrTopics = array();
+		$arrTopics = $this->topic->getTopicById( $topicID );
+
+		echo json_encode( $arrTopics);
+	}
+
+
+	public function getComments(){
+
+		$topicID = $this->getValue('topicID');
+
+		$arrComments = array();
+		$arrComments = $this->comment->getComments("comments.topicID=".$topicID);
+
+		echo json_encode( $arrComments );
+	}
 }

@@ -214,6 +214,21 @@ var app = angular
       templateUrl: 'views/pages/news-add.html'
     })
 
+    //topic
+    .state('app.topic', {
+      url: '/topic',
+      controller: 'TopicCtrl',
+      templateUrl: 'views/pages/topic.html'
+    })
+    //topic detail( comment list )
+    .state('app.topic.detail', {
+      url: '/detail/:topicID',
+      controller: 'TopicDetailCtrl',
+      templateUrl: 'views/pages/comment_list.html'
+    })
+
+
+
 
     .state('app.dashboard', {
       url: '/sales',

@@ -344,6 +344,47 @@ app.controller('FileUploadCtrl', ['$scope', 'FileUploader','$mdDialog', function
 
 app.controller('RouteUploadCtrl', function( $scope, $mdDialog, $http ){
 
+    $scope.uploadFile = function(){
+
+      var fd = new FormData();
+      var file = jQuery(document).find('input[type="file"]');
+
+      var individual_file = file[0].files[0];
+      fd.append("file", individual_file);
+      
+      if( !file[0].files[0] )
+      {
+         $("#route_error_message").text( "Please select file." );
+         return;
+      }
+
+      $("#route_success_message").text( "Please wait... Server is processing uploaded file." );
+
+      ajaxurl = api_url + "uploadRoute";
+      jQuery.ajax({
+          type: 'POST',
+          url: ajaxurl,
+          data: fd,
+          contentType: false,
+          processData: false,
+          success: function(response){
+            
+            response = JSON.parse( response );
+            console.log(response);
+
+            if( response.answer == "error" ){
+                $("#route_success_message").text("");
+                $("#route_error_message").text( response.message );
+            }
+
+            if( response.answer == "success" ){
+                $("#route_success_message").text( response.message );
+                $("#route_error_message").text("");
+            }
+          }
+      });
+    };
+
     $scope.showAddStoreDialog = function(ev, storeID) {
 
       $mdDialog.show({
@@ -691,4 +732,97 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
     }
 
     $scope.getPersonCompleteReports();
+});
+
+
+app.controller('TopicCtrl', function( $scope, $http ){
+
+    $scope.topics   = [];
+    $scope.perpage  = num_per_page;
+    $scope.currentPage = 1;
+    max_page = 1;
+
+    $scope.setpage = function( pagenum ){
+
+      if( pagenum < 1)
+        $scope.currentPage = 1;
+      else if( pagenum > max_page)
+        $scope.currentPage = max_page;
+      else
+        $scope.currentPage = pagenum;
+
+      $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.topics.length );
+    }
+
+    $scope.getTopics = function(){
+
+      var dataObj = {
+      };
+
+      $scope.topics = [];
+
+      $http.post( api_url + "getTopics", dataObj, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
+        if( data != "false" )
+        {
+          $scope.topics = data;
+          $scope.currentPage = 1;
+          max_page = Math.ceil( $scope.topics.length / $scope.perpage );
+          $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.topics.length );
+        }
+      });
+    }
+
+    $scope.getTopics();
+});
+
+
+app.controller('TopicDetailCtrl', function( $scope, $http, $stateParams ){
+
+    $scope.topicID = $stateParams.topicID;
+
+    $scope.comments   = [];
+    $scope.perpage  = num_per_page;
+    $scope.currentPage = 1;
+    max_page = 1;
+
+    $scope.setpage = function( pagenum ){
+
+      if( pagenum < 1)
+        $scope.currentPage = 1;
+      else if( pagenum > max_page)
+        $scope.currentPage = max_page;
+      else
+        $scope.currentPage = pagenum;
+
+      $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.comments.length );
+    }
+
+    $scope.getComments = function(){
+
+      $scope.topicInfo = null;
+      var dataObj = {
+          'topicID': $scope.topicID
+      };
+
+      $http.post( api_url + "getTopicById", dataObj, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
+      if( data != "false" )
+        {
+          $scope.topicInfo = data;
+        }
+      });
+
+      $scope.comments = [];
+
+      $http.post( api_url + "getComments", dataObj, {headers: {'Content-Type': 'application/json'} }).success(function(data, status, headers, config) {
+        if( data != "false" )
+        {
+          $scope.comments = data;
+          $scope.currentPage = 1;
+          max_page = Math.ceil( $scope.comments.length / $scope.perpage );
+          $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.comments.length );
+        }
+      });
+    }
+
+    $scope.getComments();
 });

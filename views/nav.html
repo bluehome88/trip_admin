@@ -9,8 +9,10 @@
         <li ui-sref-active="active"><a ui-sref="app.sales"><fa name="dashboard"></fa> <span>{{ 'Menu.SALES' | translate }}</span></a></li>
         <li ui-sref-active="active"><a ui-sref="app.route"><fa name="list"></fa> <span>{{ 'Menu.ROUTE' | translate }}</span></a></li>
         <li ui-sref-active="active"><a ui-sref="app.reports"><fa name="list"></fa> <span>{{ 'Menu.REPORT' | translate }}</span></a></li>
-        <li ui-sref-active="active"><a ui-sref="app.users"><fa name="pencil"></fa> <span>{{ 'Menu.USER' | translate }}</span></a></li>
+        <li ui-sref-active="active" ng-show="$root.userInfo.role==1"><a ui-sref="app.users"><fa name="pencil"></fa> <span>{{ 'Menu.USER' | translate }}</span></a></li>
         <li ui-sref-active="active" ng-show="$root.userInfo.role==1"><a ui-sref="app.news"><fa name="puzzle-piece"></fa> <span>{{ 'Menu.NEWS' | translate }}</span></a></li>
+
+        <li ui-sref-active="active" ng-show="$root.userInfo.role==1"><a ui-sref="app.topic"><fa name="puzzle-piece"></fa> <span>{{ 'Menu.TOPIC' | translate }}</span></a></li>
       </ul>
     </uib-accordion-group>
   </uib-accordion>

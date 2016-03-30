@@ -20,10 +20,12 @@ class Comment extends CI_Model
 	/* get All Comment*/
 	public function getComments( $where = '' ){
 
-		$this->_db->select('*');
+		$this->_db->select($this->table_name.'.*, users.firstName, users.lastName, users.salesCode');
 
 		if( $where != '' )
 			$this->_db->where( $where );
+		$this->_db->join('topics', 'topics.topicID='.$this->table_name.'.topicID');
+		$this->_db->join('users', 'users.userID='.$this->table_name.'.userID');
 	
 		$query = $this->_db->get();
 	

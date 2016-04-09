@@ -72,7 +72,7 @@ class News extends CI_Model
 
 	public function updateNews( $newsData ){
 
-		if( !$newsData['newsID'] )
+		if( !isset($newsData['newsID']) )
 			return false;
 
 		foreach( $newsData as $key => $value )

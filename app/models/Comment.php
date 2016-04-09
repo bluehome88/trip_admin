@@ -24,8 +24,31 @@ class Comment extends CI_Model
 
 		if( $where != '' )
 			$this->_db->where( $where );
+
 		$this->_db->join('topics', 'topics.topicID='.$this->table_name.'.topicID');
 		$this->_db->join('users', 'users.userID='.$this->table_name.'.userID');
+	
+		$query = $this->_db->get();
+	
+		if($query->num_rows() > 0)
+		{
+			$rows = $query->result();
+			return $rows;			
+		}
+
+		return false;
+	}
+
+	/* get comments by topic ID */
+	public function getCommentsByTopicID( $topicID ){
+
+		if( !$topicID )
+			return false;
+
+		$this->__construct();
+		$this->_db->select('*');
+
+		$this->_db->where( "`topicID`=".$topicID );
 	
 		$query = $this->_db->get();
 	

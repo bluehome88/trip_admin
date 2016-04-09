@@ -3,7 +3,7 @@
 	Date: 2016-03
 	Author: BlueSky
 */
-class Order extends CI_Model
+class Orders extends CI_Model
 {
 	private $_db = null; 
 	private $table_name = 'orders'; 
@@ -20,6 +20,7 @@ class Order extends CI_Model
 	/* get All Order*/
 	public function getOrders( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -71,7 +72,7 @@ class Order extends CI_Model
 
 	public function updateOrder( $orderData ){
 
-		if( !$orderData['orderID'] )
+		if( !isset( $orderData['orderID'] ))
 			return false;
 
 		foreach( $orderData as $key => $value )

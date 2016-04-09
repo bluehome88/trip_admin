@@ -20,6 +20,7 @@ class Route extends CI_Model
 	/* get All Route*/
 	public function getAllRoutes( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -80,7 +81,7 @@ class Route extends CI_Model
 		if($query->num_rows() > 0)
 		{
 			$rows = $query->result();
-			return $rows[0];
+			return $rows;
 		}
 
 		return false;
@@ -88,14 +89,14 @@ class Route extends CI_Model
 
 	public function addRoute( $routeData ){
 
-		$routeData['routeDate'] 	= date("Y-m-d");
+		//$routeData['routeDate'] 	= date("Y-m-d");
 
 		return $this->_db->insert( $this->table_name, $routeData );
 	}
 
 	public function updateRoute( $routeData ){
 
-		if( !$routeData['routeID'] )
+		if( !isset($routeData['routeID']) )
 			return false;
 
 		foreach( $routeData as $key => $value )

@@ -39,7 +39,7 @@
                     <tbody>
                       <tr ng-repeat="product in order.product_info" ng-if="$index < currentPage * perpage && $index >= (currentPage-1) * perpage">
                         <td>{{$index+1}}</td>
-                        <td class="blue-cell">{{product.product_name}}</td>
+                        <td class="blue-cell">{{product.productName}}</td>
                         <td>{{product.categoryName}}</td>
                         <td class="blue-cell">{{product.qty}}</td>
                         <td>{{product.price}}</td>

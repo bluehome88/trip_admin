@@ -454,6 +454,7 @@ app.controller('SalesDetailCtrl', function( $scope, $http, $stateParams ){
       $http.post( api_url + "getOrderDetails", { "orderID": orderID }, {headers: {'Content-Type': 'application/json'} })
         .success(function(data, status, headers, config) {
           $scope.order = data;
+console.log( $scope.order.product_info );          
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.order.product_info.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.order.product_info.length );

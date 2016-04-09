@@ -17,10 +17,15 @@ class Api extends CI_Controller {
 		// load models
 		$this->load->model('User');
 		$this->load->model('News');
+		$this->load->model('orders');
 		$this->load->model('relations');
 		$this->load->model('route');
 		$this->load->model('topic');
 		$this->load->model('comment');
+		
+		$this->load->model('store');
+		$this->load->model('product');
+		$this->load->model('category');
 
 		$this->load->library('session');
 		date_default_timezone_set('America/Chicago');
@@ -232,6 +237,11 @@ class Api extends CI_Controller {
 
 		echo json_encode( $arrReturn );
 	}
+
+	public function makeOrder(){
+
+		$this->relations->saveOrderData(array());
+	}
 	// ------- end Orders block ------- //
 
 	// ------- start Report block ------- //
@@ -244,10 +254,10 @@ class Api extends CI_Controller {
 		$arrUsers = $this->User->getUsers();
 		$arrReturn = array();
 
-		/*foreach( $arrUsers as $k => $val){
+		foreach( $arrUsers as $k => $val){
 			$arrReturn[$k] = $val;
 			$arrReturn[$k]->completion = $this->calcCompletionRate( $val->userID );
-		}*/
+		}
 		/*
 		Row Data Fields
 		array(
@@ -362,8 +372,7 @@ class Api extends CI_Controller {
 	}
 
 	public function importDataFromCSV( $filePath = '' ){
-// static
-$filePath = "/Volumes/MDATA/triputra/app/controllers/../../uploads/route/2016-03-302016-03-30clinics.csv";
+
 		// read file content
         $arrRoutes = array();
         $arrKeys = array();
@@ -388,20 +397,40 @@ $filePath = "/Volumes/MDATA/triputra/app/controllers/../../uploads/route/2016-03
             }
             $index++;
         }
-echo "<pre>";        
-print_r( $arrRoutes);
-echo "</pre>";
 
-		foreach($arrRoutes as $key => $value){
-			
-			$data = array( 
-					"" => "", 
+        if( !in_array('salesCode', $arrKeys) || !in_array('customerCode', $arrKeys) || !in_array('routeDate', $arrKeys))
+        	return  "Fields doesn't match";
 
-				);
+        $counter = 0;
+        try{
+			foreach($arrRoutes as $key => $value){
+				
+				// get userID from salesCode(userCode)
+				$userInfo = $this->User->getUsers("`salesCode`='".$value['salesCode']."'");
+				if( is_array($userInfo))
+					$userID = $userInfo[0]->userID;
 
-			$this->route->addRoute( $data);
+				// get storeID from customerCode
+				$storeInfo = $this->store->getStores("`storeCode`='".$value['customerCode']."'");
+				if( is_array($storeInfo))
+					$storeID = $storeInfo[0]->storeID;
+
+				// check exists
+				$routeInfo = $this->route->getAllRoutes("routes.userID=$userID AND routes.storeID=$storeID AND routes.routeDate='".$value['routeDate']."'");
+				
+				if( is_array($routeInfo) )
+					continue;
+
+				$data = array("userID" => $userID, "storeID" => $storeID, "routeDate" => $value['routeDate'], "active" => 1);
+				$this->route->addRoute( $data);
+
+				$counter++;
+			}
+			return $counter." Routes Imported";
 		}
-		return $filePath;
+		catch( Exception $e){
+			return "Importing Error!";
+		}
 	}
 
 	public function getTopics(){
@@ -431,5 +460,138 @@ echo "</pre>";
 		$arrComments = $this->comment->getComments("comments.topicID=".$topicID);
 
 		echo json_encode( $arrComments );
+	}
+
+	public function getAllSyncData(){
+
+		$userID = $this->getValue('userID');
+		$date = date("y-m-d");
+
+		if( !$userID )
+			return;
+
+		// Get route data
+		$arrRoutes = $this->route->getRouteByUserId( $userID );
+//echo "<pre>Routes ";
+//print_r( $arrRoutes );
+//echo "</pre>";
+
+		// Get Store Data
+		$arrStores = array();
+		if( is_array($arrRoutes) ){
+			foreach( $arrRoutes as $route )
+				$arrStores[] = $this->store->getStoreById( $route->storeID );
+		}
+//echo "<pre>Stores ";
+//print_r( $arrStores );
+//echo "</pre>";
+
+		// Get Category Data
+		$arrCategories = array();
+		foreach($arrStores as $store) {
+			$temp = $this->category->getCategories( "storeID=".$store->storeID );
+			if( $temp ){
+				for($i = 0; $i < count($temp); $i++) {
+					$arrCategories[] = $temp[$i];
+				}
+			}
+		}
+
+//echo "<pre>Categories ";
+//print_r( $arrCategories );
+//echo "</pre>";
+		
+		// Get Product Data
+		$arrProducts = array();
+		foreach ($arrCategories as $category) {
+			$temp = $this->product->getProducts( "categoryID=".$category->categoryID );
+			if( $temp ){
+				for($i = 0; $i < count($temp); $i++) {
+					$arrProducts[] = $temp[$i];
+				}
+			} 
+		}
+//echo "<pre>Products ";
+//print_r( $arrProducts );
+//echo "</pre>";
+
+		// Get Topic Data
+		$arrTopics = array();
+		foreach($arrStores as $store) {
+			$temp = $this->topic->getTopicsByStoreID( $store->storeID );
+			if( $temp ){
+				for($i = 0; $i < count($temp); $i++) {
+					$arrTopics[] = $temp[$i];
+				}
+			}
+		}
+//echo "<pre>Topics ";
+//print_r( $arrTopics );
+//echo "</pre>";
+
+		// Get Topic Data
+		$arrComments = array();
+		foreach($arrTopics as $topic) {
+			$temp = $this->comment->getCommentsByTopicID( $topic->topicID );
+			if( $temp ){
+				for($i = 0; $i < count($temp); $i++) {
+					$arrComments[] = $temp[$i];
+				}
+			}
+		}
+//echo "<pre>Comments ";
+//print_r( $arrComments );
+//echo "</pre>";
+
+		// Get News Data
+		$news = new News();
+		$arrNews = $news->getNews( );
+//echo "<pre>News ";
+//print_r( $arrNews );
+//echo "</pre>";
+
+		// Get Order Data
+		$arrOrders = array();
+		if( is_array($arrRoutes) ){
+			foreach( $arrRoutes as $route ){
+
+				$temp = $this->orders->getOrders( "routeID=".$route->routeID );
+				if( $temp ){
+					for($i = 0; $i < count($temp); $i++) {
+						$arrOrders[] = $temp[$i];
+					}
+				}
+			}
+		}
+//echo "<pre>Orders ";
+//print_r( $arrOrders );
+//echo "</pre>";
+
+		// Get OrderProducts Data
+		$arrOrderProducts = array();
+		if( is_array($arrOrders) ){
+			foreach( $arrOrders as $order ){
+
+				$temp = $this->relations->getOrderProducts( $order->orderID );
+				if( $temp ){
+					for($i = 0; $i < count($temp); $i++) {
+						$arrOrderProducts[] = $temp[$i];
+					}
+				}
+			}
+		}
+
+
+		$arrReturn = array(	"routes"  =>	$arrRoutes,
+							"category"	=>	$arrCategories,
+							"comments"	=>	$arrComments,
+							"news"		=>	$arrNews,
+							"products"	=>	$arrProducts,
+							"stores"	=>	$arrStores,
+							"topics"	=>	$arrTopics,
+							"orders"	=>	$arrOrders,
+							"order_products" => $arrOrderProducts
+			);
+		echo json_encode( $arrReturn );
 	}
 }

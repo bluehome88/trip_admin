@@ -14,12 +14,13 @@ class Product extends CI_Model
 		
 		$this->_db = $this->load->database('default', TRUE);
 		$this->_db->from( $this->table_name );
-		$this->_db->order_by("product_name", "ASC");
+		$this->_db->order_by("productName", "ASC");
 	}
 
 	/* get All Product*/
 	public function getProducts( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -69,7 +70,7 @@ class Product extends CI_Model
 
 	public function updateProduct( $productData ){
 
-		if( !$productData['productID'] )
+		if( !isset($productData['productID']) )
 			return false;
 
 		foreach( $productData as $key => $value )

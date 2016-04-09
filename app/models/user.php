@@ -17,6 +17,7 @@ class User extends CI_Model
 	/* get All Users*/
 	public function getUsers( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -65,7 +66,7 @@ class User extends CI_Model
 
 	public function updateUser( $userData ){
 
-		if( !$userData['userID'] )
+		if( !isset($userData['userID']) )
 			return false;
 
 		foreach( $userData as $key => $value )

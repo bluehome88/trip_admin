@@ -37,6 +37,27 @@ class Topic extends CI_Model
 		return false;
 	}
 
+	/* get All Topic*/
+	public function getTopicsByStoreID( $storeID ){
+
+		if( !$storeID )
+			return false;
+
+		$this->__construct();
+		$this->_db->select('*');
+
+		$this->_db->where( "`storeID`=".$storeID );
+	
+		$query = $this->_db->get();
+	
+		if($query->num_rows() > 0)
+		{
+			$rows = $query->result();
+			return $rows;			
+		}
+
+		return false;
+	}
 
 	public function getActiveTopics(){
 
@@ -73,7 +94,7 @@ class Topic extends CI_Model
 
 	public function updateTopic( $topicData ){
 
-		if( !$topicData['topicID'] )
+		if( !isset($topicData['topicID']) )
 			return false;
 
 		foreach( $topicData as $key => $value )

@@ -55,4 +55,45 @@ class Relations extends CI_Model
 		$query = $this->_db->query( $sql );
 		return $query->result();
 	}
+
+	public function getOrderProducts( $orderID ){
+		$sql = "SELECT * FROM order_products 
+				WHERE orderID=".$orderID."
+			";
+
+		$query = $this->_db->query( $sql );
+		return $query->result();		
+	}
+
+	public function saveOrderData( $arrOrderData){
+
+/*
+	$arrOrderData = array(
+		array("orderInfo" => array(
+									"userID" 		=> "",
+									"orderData"		=> "",
+									"orderQty"		=> "",
+									"totalPrice"	=> "",
+									"routeID"		=> "",
+									"date_updated"	=> "",
+									"active" 		=> 1,
+							)),
+		array("order_products" => array(
+									0=> array("orderID"=>"", "productID"=>"", "qty"=>""),
+									1=> array("orderID"=>"", "productID"=>"", "qty"=>""),
+							)),
+		array("order_attachment" => array(
+							))
+	);
+*/
+
+		// insert Order 
+		$order = new Orders();
+		print_r( $order->updateOrder(array()) );
+
+		// Save Order Products
+
+		// Save Attached Images 
+
+	}
 }

@@ -20,6 +20,7 @@ class Category extends CI_Model
 	/* get All Category*/
 	public function getCategories( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -69,7 +70,7 @@ class Category extends CI_Model
 
 	public function updateCategory( $categoryData ){
 
-		if( !$categoryData['categoryID'] )
+		if( !isset($categoryData['categoryID']) )
 			return false;
 
 		foreach( $categoryData as $key => $value )

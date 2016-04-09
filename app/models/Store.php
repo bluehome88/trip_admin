@@ -20,6 +20,7 @@ class Store extends CI_Model
 	/* get All Store*/
 	public function getStores( $where = '' ){
 
+		$this->__construct();
 		$this->_db->select('*');
 
 		if( $where != '' )
@@ -37,7 +38,7 @@ class Store extends CI_Model
 	}
 
 
-	public function getActiveStores(){
+	public static function getActiveStores(){
 
 		return $this->getStores( 'active = 1' );
 	}
@@ -46,7 +47,7 @@ class Store extends CI_Model
 
 		if( !$storeID )
 			return false;
-
+		$this->__construct();
 		$this->_db->select('*');
 
 		$this->_db->where( "`storeID`=".$storeID );
@@ -69,7 +70,7 @@ class Store extends CI_Model
 
 	public function updateStore( $storeData ){
 
-		if( !$storeData['storeID'] )
+		if( !isset($storeData['storeID']) )
 			return false;
 
 		foreach( $storeData as $key => $value )

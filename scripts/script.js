@@ -2,7 +2,7 @@
   Date: 216-01
   Author: BlueSky
 */
-
+var num_per_page = 2;
 app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
 
     $scope.perpage = num_per_page;
@@ -454,7 +454,6 @@ app.controller('SalesDetailCtrl', function( $scope, $http, $stateParams ){
       $http.post( api_url + "getOrderDetails", { "orderID": orderID }, {headers: {'Content-Type': 'application/json'} })
         .success(function(data, status, headers, config) {
           $scope.order = data;
-console.log( $scope.order.product_info );          
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.order.product_info.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.order.product_info.length );
@@ -520,7 +519,7 @@ app.controller('RouteCtrl', function( $scope, $http, $timeout, $mdDialog ){
         $scope.currentPage = max_page;
       else
         $scope.currentPage = pagenum;
-
+console.log( pagenum );
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.routes.length );
     }
 
@@ -542,6 +541,9 @@ app.controller('RouteCtrl', function( $scope, $http, $timeout, $mdDialog ){
         if( data != "false" )
         {
           $scope.routes = data;
+          max_page = Math.ceil( $scope.routes.length / $scope.perpage );
+          $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.routes.length );
+
         }
       });
     }
@@ -673,9 +675,11 @@ app.controller('ReportCtrl', function($scope, $http ) {
         if( data != "false" )
         {
           $scope.reports = data;
+console.log( $scope.reports );
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.reports.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.reports.length );
+          $scope.total_count = $scope.reports.length;
         }
       });
     }
@@ -723,7 +727,7 @@ app.controller('ReportPersonCompleteCtrl', function($scope, $http, $stateParams 
       res.success(function(data, status, headers, config) {
         if( data != "false" )
         {
-          $scope.person_reports = data;1
+          $scope.person_reports = data;
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.person_reports.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.person_reports.length );

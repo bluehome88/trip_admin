@@ -65,7 +65,7 @@ class Relations extends CI_Model
 		return $query->result();		
 	}
 
-	public function saveOrderData( $arrOrderData){
+	public function saveOrderData( $arrOrderData ){
 
 /*
 	$arrOrderData = array(
@@ -87,13 +87,24 @@ class Relations extends CI_Model
 	);
 */
 
-		// insert Order 
+		// insert Order
+		/*$arrOrder = array(
+				"userID"	=> 2,
+				"orderQty"	=> 3,
+				"totalPrice"=> 4,
+				"routeID"	=> 3,
+				"active"	=> 1,
+		);
+
 		$order = new Orders();
-		print_r( $order->updateOrder(array()) );
+		print_r( $order->addOrder( $arrOrder ) ); /**/
 
 		// Save Order Products
-
-		// Save Attached Images 
+		
+		$arrProducts = array(
+				"productID"	=> 1,
+				
+		);
 
 	}
 }

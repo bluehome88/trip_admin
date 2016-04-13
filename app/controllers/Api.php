@@ -240,36 +240,61 @@ class Api extends CI_Controller {
 
 	public function makeOrder(){
 
+		if( !$this->getValue("orderData") ){
+			echo "error";
+			die;
+		}
+		$orderData = json_decode( $this->getValue("orderData") );
 		$this->relations->saveOrderData(array());
 	}
 	// ------- end Orders block ------- //
 
 	// ------- start Report block ------- //
-	private function calcCompletionRate( $user_id ){
-		return $user_id;
+	public function calcCompletionRate( $userID, $date = NULL ){
+
+		// get count of routes
+		if( $date == NULL )
+			$routes = $this->route->getRouteByUserId( $userID );
+		else
+			$routes = $this->route->getAllRoutes("routes.userID=".$userID." AND routes.routeDate='".$date."'");
+
+		$num_routes = count( $routes );
+
+		// get orders
+		if( $date == NULL )
+			$where = "userID=".$userID;
+		else
+			$where = "userID=".$userID." AND orderDate='".$date."'";
+
+		$orders = $this->orders->getOrders( $where );
+		$num_orders = sizeof( $orders );
+
+		if( empty($routes) )
+			return  "---";
+
+		if( empty($orders) )
+			return  "0%";
+
+		return $num_orders / $num_routes * 100 ."%";
 	}
 
 	public function getReports(){
 
 		$arrUsers = $this->User->getUsers();
-		$arrReturn = array();
+		$arrReports = array();
 
 		foreach( $arrUsers as $k => $val){
-			$arrReturn[$k] = $val;
-			$arrReturn[$k]->completion = $this->calcCompletionRate( $val->userID );
+			$rate  = $this->calcCompletionRate( $val->userID );
+
+			if( !strcmp($rate, "---") )
+				continue;
+
+			$val->completion = $rate;
+			
+			$arrReports[] = $val;
 		}
-		/*
-		Row Data Fields
-		array(
-			"userID"=>"2",
-			"firstName"=> "Mark",
-			"lastName"=>"Otto",
-			"areaInfo"=>"District 4",
-			"completion"=>"80" ),
 
-		);*/
-
-		echo json_encode( $arrReturn );
+		echo json_encode( $arrReports );
 	}
 
 	public function getPersonCompleteReports( ){
@@ -279,24 +304,18 @@ class Api extends CI_Controller {
 			die;
 		}
 
-		$arrPersonReports = array(
-				array( "comp_date"=>"23 Dec 2015", "Area"=>"District 6", "daily_completion"=>"90" ),
-				array( "comp_date"=>"22 Dec 2015", "Area"=>"District 4", "daily_completion"=>"80" ),
-				array( "comp_date"=>"5 Jan 2016", "Area"=>"District 1", "daily_completion"=>"70" ),
-				array( "comp_date"=>"8 Jan 2016", "Area"=>"District 2", "daily_completion"=>"90" ),
-				array( "comp_date"=>"22 Dec 2015", "Area"=>"District 4", "daily_completion"=>"80" ),
-				array( "comp_date"=>"5 Jan 2016", "Area"=>"District 1", "daily_completion"=>"70" ),
-				array( "comp_date"=>"8 Jan 2016", "Area"=>"District 2", "daily_completion"=>"90" ),
-				array( "comp_date"=>"22 Dec 2015", "Area"=>"District 4", "daily_completion"=>"80" ),
-				array( "comp_date"=>"5 Jan 2016", "Area"=>"District 1", "daily_completion"=>"70" ),
-				array( "comp_date"=>"8 Jan 2016", "Area"=>"District 2", "daily_completion"=>"90" ),
-				array( "comp_date"=>"22 Dec 2015", "Area"=>"District 4", "daily_completion"=>"80" ),
-				array( "comp_date"=>"5 Jan 2016", "Area"=>"District 1", "daily_completion"=>"70" ),
-				array( "comp_date"=>"8 Jan 2016", "Area"=>"District 2", "daily_completion"=>"90" ),
-				array( "comp_date"=>"22 Dec 2015", "Area"=>"District 4", "daily_completion"=>"80" ),
-				array( "comp_date"=>"5 Jan 2016", "Area"=>"District 1", "daily_completion"=>"70" ),
-				array( "comp_date"=>"8 Jan 2016", "Area"=>"District 2", "daily_completion"=>"90" ),
-		);
+		$userID = $this->getValue("userID");
+		$routes = $this->route->getRouteByUserId( $userID );
+
+		$arrPersonReports = array();
+		if( count( $routes ) ){
+			foreach( $routes as $k => $route )
+			{
+				$arrPersonReports[$k]['comp_date'] = $route->routeDate;
+				$arrPersonReports[$k]['Area'] = "";
+				$arrPersonReports[$k]['daily_completion'] = $this->calcCompletionRate( $userID, $route->routeDate );
+			}
+		}
 
 		echo json_encode( $arrPersonReports );
 	}
@@ -465,7 +484,7 @@ class Api extends CI_Controller {
 	public function getAllSyncData(){
 
 		$userID = $this->getValue('userID');
-		$date = date("y-m-d");
+		$date = date("Y-m-d");
 
 		if( !$userID )
 			return;
@@ -479,8 +498,11 @@ class Api extends CI_Controller {
 		// Get Store Data
 		$arrStores = array();
 		if( is_array($arrRoutes) ){
-			foreach( $arrRoutes as $route )
-				$arrStores[] = $this->store->getStoreById( $route->storeID );
+			foreach( $arrRoutes as $route ){
+				$temp = $this->store->getStoreById( $route->storeID );
+				if( !in_array($temp, $arrStores))
+					$arrStores[] = $temp;
+			}
 		}
 //echo "<pre>Stores ";
 //print_r( $arrStores );
@@ -583,15 +605,18 @@ class Api extends CI_Controller {
 
 
 		$arrReturn = array(	"routes"  =>	$arrRoutes,
+							"stores"	=>	$arrStores,
 							"category"	=>	$arrCategories,
+							"products"	=>	$arrProducts,
+							"topics"	=>	$arrTopics,
 							"comments"	=>	$arrComments,
 							"news"		=>	$arrNews,
-							"products"	=>	$arrProducts,
-							"stores"	=>	$arrStores,
-							"topics"	=>	$arrTopics,
 							"orders"	=>	$arrOrders,
 							"order_products" => $arrOrderProducts
 			);
+echo "<pre>";		
+print_r( $arrReturn );
+echo "</pre>";
 		echo json_encode( $arrReturn );
 	}
 }

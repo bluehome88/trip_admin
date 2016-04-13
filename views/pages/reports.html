@@ -38,13 +38,13 @@
             	<td>{{$index + 1}}</td>
 	            <td>{{report.firstName}}</td>
 	            <td>{{report.lastName}}</td>
-	            <td class="blue-cell">{{report.completion}}%</td>
+	            <td class="blue-cell">{{report.completion}}</td>
 	            <td>
 	              <span ui-sref="app.reports.person({userID: report.userID})" class="text-success">View Details</span>
 	            </td>
 	          </tr>
-	          <tr ng-hide="reports.length">
-	            <td colspan = 7 align="center"> There is no result!</td>
+	          <tr ng-hide="total_count">
+	            <td colspan = 5 align="center"> There is no result!</td>
 	          </tr>
 	        </tbody>
 	      </table>
@@ -54,7 +54,7 @@
 
 	  <!-- tile footer -->
 	  <div class="tile-footer dvd dvd-top">
-	    <div class="row"  ng-show="reports.length">
+	    <div class="row"  ng-show="total_count">
 
 	      <div class="col-sm-5 hidden-xs">
 	      </div>

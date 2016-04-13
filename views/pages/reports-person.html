@@ -11,15 +11,6 @@
 		      <div class="col-sm-8">
 		          <h2 class="page_title"><U>{{user.firstName}} {{user.lastName}}</U> Completion Report</h2>
 		      </div>
-
-		      <div class="col-sm-4">
-		        <div class="input-group">
-		          <input type="text" class="input-sm form-control" placeholder="Search..." ng-model="search_text">
-		          <span class="input-group-btn">
-		            <button class="btn btn-sm btn-default" type="button" ng-click="getUsers()">Go!</button>
-		          </span>
-		        </div>
-		      </div>
 		    </div>
 		  </div>
 		  <!-- /tile widget -->
@@ -46,7 +37,7 @@
 		            <td><label class="checkbox checkbox-custom checkbox-custom-sm m-0"><input type="checkbox" ng-model="report.selected"><i></i></label></td>
 		            <td>{{report.comp_date}}</td>
 		            <td>{{report.Area}}</td>
-		            <td class="blue-cell">{{report.daily_completion}}%</td>
+		            <td class="blue-cell">{{report.daily_completion}}</td>
 
 		            <td>
 		              <span ui-sref="app.reports.detail({reportID: 1})" class="text-success" >View Details</span>

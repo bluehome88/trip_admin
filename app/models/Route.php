@@ -67,14 +67,17 @@ class Route extends CI_Model
 	}
 
 	/* get Route by routeID*/
-	public function getRouteByUserId( $userID ){
+	public function getRouteByUserId( $userID, $date="" ){
 
+		$this->__construct();
 		if( !$userID )
 			return false;
 
 		$this->_db->select('*');
 
 		$this->_db->where( "`userID`=".$userID );
+		if( $date )
+			$this->_db->where( "`routeDate`='". $date ."'" );
 
 		$query = $this->_db->get();
 
@@ -88,8 +91,6 @@ class Route extends CI_Model
 	}
 
 	public function addRoute( $routeData ){
-
-		//$routeData['routeDate'] 	= date("Y-m-d");
 
 		return $this->_db->insert( $this->table_name, $routeData );
 	}

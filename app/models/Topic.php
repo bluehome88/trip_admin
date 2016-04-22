@@ -87,9 +87,12 @@ class Topic extends CI_Model
 
 	public function addTopic( $topicData ){
 
-		$topicData['date_added'] 	= date("Y-m-d H:i:s");
+		$topicData['date_updated'] 	= date("Y-m-d H:i:s");
 
-		return $this->_db->insert( $this->table_name, $topicData );
+		if( $this->_db->insert( $this->table_name, $topicData ))
+			return $this->_db->insert_id();
+		else
+			return 0;
 	}
 
 	public function updateTopic( $topicData ){

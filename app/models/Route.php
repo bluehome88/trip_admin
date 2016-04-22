@@ -103,8 +103,6 @@ class Route extends CI_Model
 		foreach( $routeData as $key => $value )
 			$this->_db->set( $key, $value );
 
-		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
-
 		$this->_db->where( "routeID", $routeData['routeID'] );
 		return $this->_db->update( $this->table_name );
 	}

@@ -68,7 +68,8 @@ class Orders extends CI_Model
 		$orderData['orderDate'] 	= date("Y-m-d");
 		$this->_db->set( 'date_updated', date("Y-m-d H:i:s") );
 
-		return $this->_db->insert( $this->table_name, $orderData );
+		$this->_db->insert( $this->table_name, $orderData );
+		return $this->_db->insert_id();
 	}
 
 	public function updateOrder( $orderData ){

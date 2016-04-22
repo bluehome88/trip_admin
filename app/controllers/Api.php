@@ -244,8 +244,8 @@ class Api extends CI_Controller {
 			echo "error";
 			die;
 		}
-		$orderData = json_decode( $this->getValue("orderData") );
-		$this->relations->saveOrderData(array());
+		//$orderData = json_decode( $this->getValue("orderData") );
+		echo $this->relations->saveOrderData( $this->getValue("orderData") );
 	}
 	// ------- end Orders block ------- //
 
@@ -614,9 +614,53 @@ class Api extends CI_Controller {
 							"orders"	=>	$arrOrders,
 							"order_products" => $arrOrderProducts
 			);
-echo "<pre>";		
+/*echo "<pre>";		
 print_r( $arrReturn );
-echo "</pre>";
+echo "</pre>";*/
 		echo json_encode( $arrReturn );
+	}
+
+	public function addTopic(){
+
+		$storeID = $this->getValue('storeID');
+		$topicTitle = $this->getValue('topicTitle');
+		$date_added = $this->getValue('date_added');
+
+		if( !$storeID || $topicTitle == "" )
+		{
+			echo "error";
+			exit;
+		}
+
+		$topicData = array(
+			"storeID" 	=> $storeID,
+			"topicTitle" 	=> $topicTitle,
+			"date_added" 	=> $date_added,
+			"active" 		=> 1
+		);
+
+		echo $this->topic->addTopic( $topicData );
+	}
+
+	public function addComment(){
+
+		$topicID = $this->getValue('topicID');
+		$userID = $this->getValue('userID');
+		$contents = $this->getValue('contents');
+		$date_added = $this->getValue('date_added');
+
+		if( !$topicID || !$userID ){
+			echo "error";
+			exit;
+		}
+		$commentData = array(
+			"topicID" 	=> $topicID,
+			"userID" 	=> $userID,
+			"contents" 	=> $contents,
+			"date_added"=> $date_added,
+			"active"	=> 1
+		);
+
+		echo $this->comment->addComment( $commentData );
 	}
 }

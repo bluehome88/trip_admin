@@ -1,8 +1,8 @@
 /*
-  Date: 216-01
+  Date: 2016-01
   Author: BlueSky
 */
-var num_per_page = 2;
+var num_per_page = 5;
 app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
 
     $scope.perpage = num_per_page;
@@ -493,9 +493,11 @@ app.controller('SalesCtrl', function( $scope, $http ){
         if( data != "false" )
         {
           $scope.orders = data;
+console.log(data.length );          
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.orders.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.orders.length );
+console.log($scope.to_limit);          
         }
       });
     }
@@ -519,7 +521,7 @@ app.controller('RouteCtrl', function( $scope, $http, $timeout, $mdDialog ){
         $scope.currentPage = max_page;
       else
         $scope.currentPage = pagenum;
-console.log( pagenum );
+
       $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.routes.length );
     }
 
@@ -675,7 +677,7 @@ app.controller('ReportCtrl', function($scope, $http ) {
         if( data != "false" )
         {
           $scope.reports = data;
-console.log( $scope.reports );
+
           $scope.currentPage = 1;
           max_page = Math.ceil( $scope.reports.length / $scope.perpage );
           $scope.to_limit = Math.min( $scope.currentPage * $scope.perpage, $scope.reports.length );

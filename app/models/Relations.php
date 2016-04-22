@@ -67,44 +67,55 @@ class Relations extends CI_Model
 
 	public function saveOrderData( $arrOrderData ){
 
-/*
-	$arrOrderData = array(
-		array("orderInfo" => array(
-									"userID" 		=> "",
-									"orderData"		=> "",
-									"orderQty"		=> "",
-									"totalPrice"	=> "",
-									"routeID"		=> "",
-									"date_updated"	=> "",
-									"active" 		=> 1,
-							)),
-		array("order_products" => array(
-									0=> array("orderID"=>"", "productID"=>"", "qty"=>""),
-									1=> array("orderID"=>"", "productID"=>"", "qty"=>""),
-							)),
-		array("order_attachment" => array(
-							))
-	);
-*/
-
 		// insert Order
-		/*$arrOrder = array(
-				"userID"	=> 2,
-				"orderQty"	=> 3,
-				"totalPrice"=> 4,
-				"routeID"	=> 3,
-				"active"	=> 1,
-		);
 
-		$order = new Orders();
-		print_r( $order->addOrder( $arrOrder ) ); /**/
+		if( isset( $arrOrderData['orderID'])){
+			$arrOrder = array(
+					"userID"	=> $arrOrderData['userID'],
+					"orderQty"	=> $arrOrderData['orderQty'],
+					"totalPrice"=> $arrOrderData['totalPrice'],
+					"routeID"	=> $arrOrderData['routeID'],
+					"active"	=> 1,
+			);
 
-		// Save Order Products
-		
-		$arrProducts = array(
-				"productID"	=> 1,
-				
-		);
+			$order = new Orders();
+			$orderID = $order->addOrder( $arrOrder ) ;
 
+			foreach( $arrOrderData['products'] as $row )
+			{
+				$product = array("orderID"=> $orderID, "productID" => $row['productID'], "qty" => $row['qty'] );
+				$this->_db->insert('order_products', $product );
+			}
+
+			$this->_db->set( 'isDone', "1" );
+			$this->_db->where( "routeID", $arrOrderData['routeID'] );
+			$this->_db->update( 'routes' );
+
+			return "success";
+		}
+		else
+		{
+			$orderID = $arrOrderData['orderID'];
+			$arrOrder = array(
+					"orderID"	=> $orderID,
+					"userID"	=> $arrOrderData['userID'],
+					"orderQty"	=> $arrOrderData['orderQty'],
+					"totalPrice"=> $arrOrderData['totalPrice'],
+					"routeID"	=> $arrOrderData['routeID'],
+					"active"	=> 1,
+			);
+
+			$order = new Orders();
+			$order->updateOrder( $arrOrder );
+
+			foreach( $arrOrderData['products'] as $row )
+			{
+				$sql = "UPDATE order_products SET qty='".$row['qty']."' WHERE orderID='".$orderID."' AND productID='".$row['productID']."'";
+				$query = $this->_db->query( $sql );
+
+			}
+
+			return "success";
+		}
 	}
 }

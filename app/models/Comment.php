@@ -89,9 +89,12 @@ class Comment extends CI_Model
 
 	public function addComment( $commentData ){
 
-		$commentData['date_added'] 	= date("Y-m-d");
+		$commentData['date_updated'] 	= date("Y-m-d");
 
-		return $this->_db->insert( $this->table_name, $commentData );
+		if( $this->_db->insert( $this->table_name, $commentData ))
+			return $this->_db->insert_id();
+		else
+			return 0;
 	}
 
 	public function updateComment( $commentData ){

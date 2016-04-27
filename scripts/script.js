@@ -2,7 +2,7 @@
   Date: 2016-01
   Author: BlueSky
 */
-var num_per_page = 5;
+var num_per_page = 10;
 app.controller('UserCtrl', function( $scope, $http, $mdDialog ){
 
     $scope.perpage = num_per_page;

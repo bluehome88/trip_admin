@@ -67,9 +67,30 @@ class Relations extends CI_Model
 
 	public function saveOrderData( $arrOrderData ){
 
-		// insert Order
+		// check inputed Data
 
-		if( isset( $arrOrderData['orderID'])){
+		if( !isset($arrOrderData['userID']) )
+			return "error";
+
+		if( !isset($arrOrderData['products']))
+			return "error";
+
+		if( !is_array( $arrOrderData['products'] ))
+			return "error";
+
+//		$arrOrderData['orderQty'] = count( $arrOrderData['products'] );
+		$arrOrderData['orderQty'] = isset($arrOrderData['orderQty']) ? $arrOrderData['orderQty'] : 0;
+		$arrOrderData['totalPrice'] = isset($arrOrderData['totalPrice']) ? $arrOrderData['totalPrice'] : 0;
+		$c_pro = new Product();
+
+		foreach ($arrOrderData['products'] as $key => $value) {
+			$arrOrderData['orderQty'] += $value['qty'];
+			$product = $c_pro->getProductById( $value['productID']);
+			$arrOrderData['totalPrice'] += $value['qty'] * $product->price;
+		}
+	
+		// insert Order
+		if( !isset( $arrOrderData['orderID'])){
 			$arrOrder = array(
 					"userID"	=> $arrOrderData['userID'],
 					"orderQty"	=> $arrOrderData['orderQty'],
@@ -91,7 +112,7 @@ class Relations extends CI_Model
 			$this->_db->where( "routeID", $arrOrderData['routeID'] );
 			$this->_db->update( 'routes' );
 
-			return "success";
+			//return $orderID;
 		}
 		else
 		{
@@ -112,10 +133,11 @@ class Relations extends CI_Model
 			{
 				$sql = "UPDATE order_products SET qty='".$row['qty']."' WHERE orderID='".$orderID."' AND productID='".$row['productID']."'";
 				$query = $this->_db->query( $sql );
-
 			}
 
-			return "success";
+			//return $orderID;
 		}
+		$arrOrderData['orderID'] = $orderID;
+		return json_encode($arrOrderData);
 	}
 }

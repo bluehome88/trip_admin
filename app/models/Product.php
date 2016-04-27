@@ -45,6 +45,7 @@ class Product extends CI_Model
 	/* get Product by productID*/
 	public function getProductById( $productID ){
 
+		$this->__construct();
 		if( !$productID )
 			return false;
 

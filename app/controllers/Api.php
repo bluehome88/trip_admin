@@ -489,8 +489,10 @@ class Api extends CI_Controller {
 		if( !$userID )
 			return;
 
-		// Get route data
+		// Get route data 
+		//$arrRoutes = $this->route->getRouteByUserId( $userID, $date );
 		$arrRoutes = $this->route->getRouteByUserId( $userID );
+
 //echo "<pre>Routes ";
 //print_r( $arrRoutes );
 //echo "</pre>";
@@ -662,5 +664,12 @@ echo "</pre>";*/
 		);
 
 		echo $this->comment->addComment( $commentData );
+	}
+
+	public function uploadPhoto(){
+		$routeID = $this->getValue('routeID');
+		$filename = $this->getValue('file');
+
+		return "success";
 	}
 }
